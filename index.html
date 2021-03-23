@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Colemak Academy - Learn Colemak fast. A free, easy way to learn to touch type the Colemak layout, Colemak-DH, Dvorak, and other custom keyboard layouts. The best, most customizable typing tutor and keyboard trainer available. Also works for workman, qwerty, and azerty</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="Colemak Academy - Learn Colemak fast. A free, easy way to learn to touch type the Colemak layout, Colemak-DH, Dvorak, and other custom keyboard layouts. The best, most customizable typing tutor and keyboard trainer available. Also works for workman, qwerty, and azerty">
+	<meta name="author" content="Layout Academy">
+
+	<link rel="icon" href='img/favicon.webp'>
+	<link rel="stylesheet" type="text/css" href="logic/main.css">
+</head>
+<body>
+
+	<select  autocomplete="off">
+		<option value='colemak'>Colemak</option>
+		<option value='azerty'>AZERTY</option>
+		<option value='colemakdh'>Colemak-DH</option>
+		<option value='colemakdhm'>Colemak-DHm</option>
+		<option value='dvorak'>Dvorak</option>
+		<option value='lefthandeddvorak'>Left-handed Dvorak</option>
+		<option value='qwerty'>QWERTY</option>
+		<option value='tarmak'>Tarmak</option>
+		<option value='workman'>Workman</option>
+		<option value='custom'>Custom</option>
+	</select>
+
+	<button class='preferenceButton'></button>
+	<div class='preferenceMenu'>
+		<button class='closePreferenceButton'></button>
+		<ul class='preferences'>
+			<li>Capital Letters Allowed<input class='capitalLettersAllowed' type="checkbox"autocomplete="off"></li>
+			<li>Punctuation Allowed<input class='punctuationModeButton' type="checkbox"autocomplete="off"></li>
+			<li>Full Sentence Mode<input class='fullSentenceMode' type="checkbox"autocomplete="off"></li>
+			<li>Word Scrolling Mode
+				<input class='wordScrollingModeButton' type="checkbox" autocomplete="off"checked>
+			</li>
+			<li>
+				<input class='timeLimitModeInput noDisplay' type="number" value="60"autocomplete="off">
+				Time Limit Mode<input class='timeLimitModeButton' type="checkbox"autocomplete="off">
+			</li>
+			<li>  
+				<input class='wordLimitModeInput' type="number" value="50" step="10"autocomplete="off">
+				Word Limit Mode <input class='wordLimitModeButton' type="checkbox" autocomplete="off"checked> 
+			</li>
+		</ul>
+	</div>
+
+	<nav>
+		<button class='currentLevel lvl1'>Level 1</button>
+		<button class='lvl2'>Level 2</button>
+		<button class='lvl3'>Level 3</button>
+		<button class='lvl4'>Level 4</button>
+		<button class='lvl5'>Level 5</button>
+		<button class='lvl6'>Level 6</button>
+		<button class='lvl7'>All Words</button>
+		<button class='lvl8'>Full Sentences</button>
+
+	</nav>
+
+	<div class="customInput">
+		<div class="buttonHolder">
+			<button class='discardButton'>Discard</button>
+			<button class='saveButton'>Save</button>
+		</div>
+		<div id='inputKeyboard'></div>
+		<div id='inputShiftKeyboard'></div>
+		<input type="text" name="customKey" id="customUIKeyInput">
+		<div id='customUILevelSelect'>
+			<button class='customUILevelButton currentCustomUILevel'>lvl1</button>
+			<button class='customUILevelButton'>lvl2</button>
+			<button class='customUILevelButton'>lvl3</button>
+			<button class='customUILevelButton'>lvl4</button>
+			<button class='customUILevelButton'>lvl5</button>
+			<button class='customUILevelButton'>lvl6</button>
+		</div>
+	</div>
+
+	<section id="main">
+
+		<h1><span id="layoutName">Colemak</span> Academy</h1>
+
+		<div class='typingArea'>
+			<div class='fade' id='fadeElement'>
+				<h2 class='noDisplay prompt'>
+				</h2>
+			</div>
+			<button id="resetButton" class='noDisplay'>Reset</button>
+			<input id = 'userInput' type="paragraph" spellcheck="false">
+			<div id='scoreAndClock'>
+				<span id="scoreText">0/50</span>
+				<span id="timeText">0m :0 s</span>
+			</div>
+			<div id='testResults' class='transparent'>
+				<div id='accuracyText'></div>
+				<div id='wpmText'></div>
+			</div>
+		</div>
+		<div class='cheatsheetContainer'>
+			<div class='cheatsheet'></div>
+			<div>
+				<button class='openUIButton'></button>
+			</div>
+		</div>
+
+		<h3 class='bottomText'> Sign the <a href="https://www.change.org/p/microsoft-add-colemak-as-a-pre-installed-keyboard-layout-to-windows" target="_blank">Petition</a> for Windows to add Colemak as a default option</h3>
+	</section>
+
+	<div  id='mappingToggle'>
+		<h6>Keyboard Mapping: <span>on</span></h6>
+		<label class="switch" >
+  			<input type="checkbox"  autocomplete="off">
+ 			<span  class="slider"></span>
+		</label>	
+	</div>
+
+
+<script type="text/javascript" src="logic/layoutInfo.js"></script>
+<script type="text/javascript" src="logic/wordList.js"></script>
+<script type="text/javascript" src="logic/keyboardDivs.js"></script>
+<script type="text/javascript" src="logic/app.js"></script>
+</body>
+</html>
+
+<!-- ©NickMariano 2020 -->
