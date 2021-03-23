@@ -6,7 +6,7 @@
 */
 
 :root {
-	--text-color: #ddd;
+	--text-color: #fff;
 	--background-color: black;
 	--menu-background-color: #111;
 	--accent-color: #8727b8;
@@ -269,8 +269,7 @@ button:focus {
 }
 
 .fade {
-    -webkit-mask-image: -webkit-gradient(linear, left top, right bottom, 
-    from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+    -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,1) 75%, rgba(0,0,0,0));
     /*height: 20%;*/
 }
 
