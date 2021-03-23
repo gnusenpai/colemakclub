@@ -13,10 +13,10 @@ var keyboardDivs = `
 		<div class="key" id='Digit0'><span class="letter"></span></div>
 		<div class="key" id='Minus'><span class="letter"></span></div>
 		<div class="key" id='Equal'><span class="letter"></span></div>
-		<div class="key big" id='BackSpace'><span class="letter"></span></div>
+		<div class="key twou" id='BackSpace'><span class="letter"></span></div>
 	</div>
 	<div class=row>
-		<div class="key big"><span class="letter"></span></div>
+		<div class="key onepointfiveu"><span class="letter"></span></div>
 		<div class="key" id='KeyQ'><span class="letter"></span></div>
 		<div class="key" id='KeyW'><span class="letter"></span></div>
 		<div class="key" id='KeyE'><span class="letter"></span></div>
@@ -29,10 +29,10 @@ var keyboardDivs = `
 		<div class="key lvl5" id='KeyP'><span class="letter"></span></div>
 		<div class="key" id='BracketLeft'><span class="letter"></span></div>
 		<div class="key" id='BracketRight'><span class="letter"></span></div>
-		<div class="key" id='Backslash'><span class="letter"></span></div>
+		<div class="key onepointfiveu" id='Backslash'><span class="letter"></span></div>
 	</div>
 	<div class=row>
-		<div class="key bigger"><span class="letter"></span></div>
+		<div class="key onepointsevenfiveu"><span class="letter"></span></div>
 		<div class="key lvl1" id='KeyA'><span class="letter"></span></div>
 		<div class="key lvl1" id='KeyS'><span class="letter"></span></div>
 		<div class="key lvl1" id='KeyD'><span class="letter"></span></div>
@@ -44,10 +44,10 @@ var keyboardDivs = `
 		<div class="key lvl1" id='KeyL'><span class="letter"></span></div>
 		<div class="key lvl1" id='Semicolon'><span class="letter"></span></div>
 		<div class="key" id='Quote'><span class="letter"></span></div>
-		<div class="key bigger"><span class="letter"></span></div>
+		<div class="key twopointtwofiveu"><span class="letter"></span></div>
 	</div>
 	<div class=row>
-		<div class="key biggest"><span class="letter"></span></div>
+		<div class="key twopointtwofiveu"><span class="letter"></span></div>
 		<div class="key" id='KeyZ'><span class="letter"></span></div>
 		<div class="key lvl6" id='KeyX'><span class="letter"></span></div>
 		<div class="key lvl6" id='KeyC'><span class="letter"></span></div>
@@ -58,18 +58,17 @@ var keyboardDivs = `
 		<div class="key lvl5" id='Comma'><span class="letter"></span></div>
 		<div class="key lvl6" id='Period'><span class="letter"></span></div>
 		<div class="key lvl6" id='Slash'><span class="letter"></span></div>
-		<div class="key biggest"><span class="letter"></span></div>
+		<div class="key twopointsevenfiveu"><span class="letter"></span></div>
 	</div>
 	<div class=row>
-		<div class="key"><span class="letter"></span></div>
-		<div class="key"><span class="letter"></span></div>
-		<div class="key"><span class="letter"></span></div>
-		<div class="key"><span class="letter"></span></div>
-		<div class="key Space"><span class="letter"></span></div>
-		<div class="key"><span class="letter"></span></div>
-		<div class="key"><span class="letter"></span></div>
-		<div class="key bigger"><span class="letter"></span></div>
-		<div class="key"><span class="letter"></span></div>
+		<div class="key onepointtwofiveu"><span class="letter"></span></div>
+		<div class="key onepointtwofiveu"><span class="letter"></span></div>
+		<div class="key onepointtwofiveu"><span class="letter"></span></div>
+		<div class="key sixpointtwofiveu"><span class="letter"></span></div>
+		<div class="key onepointtwofiveu"><span class="letter"></span></div>
+		<div class="key onepointtwofiveu"><span class="letter"></span></div>
+		<div class="key onepointtwofiveu"><span class="letter"></span></div>
+		<div class="key onepointtwofiveu"><span class="letter"></span></div>
 	</div>
 `;
 
@@ -88,10 +87,10 @@ var customLayout = `
 		<div class="cKey" id='customDigit0'><span class="letter"></span></div>
 		<div class="cKey" id='customMinus'><span class="letter"></span></div>
 		<div class="cKey" id='customEqual'><span class="letter"></span></div>
-		<div class="cKey big rowEnd" id='customBackSpace'><span class="letter"></span></div>
+		<div class="cKey twou rowEnd" id='customBackSpace'><span class="letter"></span></div>
 	</div>
 	<div class=row>
-		<div class="cKey big rowStart" id='customTab' ><span class="letter"></span></div>
+		<div class="cKey onepointfiveu rowStart" id='customTab' ><span class="letter"></span></div>
 		<div class="cKey normalCKey selectedInputKey defaultSelectedKey" id='customKeyQ'><span  class="letter pulse">_</span></div>
 		<div class="cKey normalCKey" id='customKeyW'><span  class="letter"></span></div>
 		<div class="cKey normalCKey" id='customKeyE'><span  class="letter"></span></div>
@@ -104,10 +103,10 @@ var customLayout = `
 		<div class="cKey normalCKey" id='customKeyP'><span  class="letter"></span></div>
 		<div class="cKey normalCKey" id='customBracketLeft'><span  class="letter"></span></div>
 		<div class="cKey normalCKey" id='customBracketRight'><span  class="letter"></span></div>
-		<div class="cKey rowEnd" id='customBackslash'><span class="letter"></span></div>
+		<div class="cKey onepointfiveu rowEnd" id='customBackslash'><span class="letter"></span></div>
 	</div>
 	<div class=row>
-		<div class="cKey bigger rowStart" id='customCapsLock'><span class="letter"></span></div>
+		<div class="cKey onepointsevenfiveu rowStart" id='customCapsLock'><span class="letter"></span></div>
 		<div class="cKey lvl1 normalCKey" id='customKeyA'>
 			<span class="letter"></span>
 		</div>
@@ -121,10 +120,10 @@ var customLayout = `
 		<div class="cKey lvl1 normalCKey" id='customKeyL'><span class="letter"></span></div>
 		<div class="cKey lvl1 normalCKey" id='customSemicolon'><span class="letter"></span></div>
 		<div class="cKey normalCKey" id='customQuote'><span class="letter"></span></div>
-		<div class="cKey bigger rowEnd" id='customEnter'><span class="letter"></span></div>
+		<div class="cKey twopointtwofiveu rowEnd" id='customEnter'><span class="letter"></span></div>
 	</div>
 	<div class=row>
-		<div class="cKey biggest rowStart"><span class="letter"></span></div>
+		<div class="cKey twopointtwofiveu rowStart"><span class="letter"></span></div>
 		<div class="cKey normalCKey" id='customKeyZ'><span class="letter"></span></div>
 		<div class="cKey lvl6 normalCKey" id='customKeyX'><span class="letter"></span></div>
 		<div class="cKey lvl6 normalCKey" id='customKeyC'><span class="letter"></span></div>
@@ -135,17 +134,17 @@ var customLayout = `
 		<div class="cKey lvl5 normalCKey" id='customComma'><span class="letter"></span></div>
 		<div class="cKey lvl6 normalCKey" id='customPeriod'><span class="letter"></span></div>
 		<div class="cKey lvl6 normalCKey" id='customSlash'><span class="letter"></span></div>
-		<div class="cKey biggest rowEnd finalKey"><span class="letter"></span></div>
+		<div class="cKey twopointsevenfiveu rowEnd finalKey"><span class="letter"></span></div>
 	</div>
 	<div class='row'>
-		<div class="cKey rowStart"><span class="letter"></span></div>
-		<div class="cKey"><span class="letter"></span></div>
-		<div class="cKey"><span class="letter"></span></div>
-		<div class="cKey"><span class="letter"></span></div>
-		<div class="cKey Space"><span class="letter"></span></div>
-		<div class="cKey"><span class="letter"></span></div>
-		<div class="cKey"><span class="letter"></span></div>
-		<div class="cKey bigger"><span class="letter"></span></div>
-		<div class="cKey rowEnd"><span class="letter"></span></div>
+		<div class="cKey onepointtwofiveu rowStart"><span class="letter"></span></div>
+		<div class="cKey onepointtwofiveu"><span class="letter"></span></div>
+		<div class="cKey onepointtwofiveu"><span class="letter"></span></div>
+		<div class="cKey onepointtwofiveu"><span class="letter"></span></div>
+		<div class="cKey sixpointtwofiveu"><span class="letter"></span></div>
+		<div class="cKey onepointtwofiveu"><span class="letter"></span></div>
+		<div class="cKey onepointtwofiveu"><span class="letter"></span></div>
+		<div class="cKey onepointtwofiveu"><span class="letter"></span></div>
+		<div class="cKey onepointtwofiveu rowEnd"><span class="letter"></span></div>
 	</div>
 `;

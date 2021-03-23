@@ -458,7 +458,7 @@ input:checked + .slider:before {
 	    -ms-flex-pack: justify;
 	        justify-content: space-between;
 	height: 5vh;
-	width: 69vh;
+	width: 75vh;
 }
 
 .key, .cKey {
@@ -474,12 +474,12 @@ input:checked + .slider:before {
 	background-color: transparent;
 	border: .2vh solid var(--accent-color);
 	height: 75%;
-	width: 5.4%;
+	width: 5%;
 
 	opacity: .5;
 
-	border-bottom-right-radius: 7%;
-	border-bottom-left-radius: 7%;
+	/*border-bottom-right-radius: 7%;
+	border-bottom-left-radius: 7%;*/
 
 	vertical-align: top;
 }
@@ -492,20 +492,32 @@ input:checked + .slider:before {
 	text-transform: uppercase;
 }
 
-.big {
-	width: 8%;
+.twou {
+	width: 11.75%;
 }
 
-.bigger {
-	width: 10%;
+.onepointfiveu {
+	width: 8.8125%;
 }
 
-.biggest {
-	width: 12%;
+.onepointsevenfiveu {
+	width: 10.28125%;
 }
 
-.Space {
-	width: 39%;
+.twopointtwofiveu {
+	width: 13.21875%;
+}
+
+.twopointsevenfiveu {
+	width: 16.15625%;
+}
+
+.onepointtwofiveu {
+	width: 7.34375%;
+}
+
+.sixpointtwofiveu {
+	width: 36.71875%;
 }
 
 .inactive {
