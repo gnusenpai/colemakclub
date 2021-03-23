@@ -409,7 +409,7 @@ a:link {
  	left: 0;
  	right: 0;
  	bottom: 0;
- 	background-color: var(--accent-color);
+ 	background-color: #444;
 }
 
 .slider:before {
@@ -427,7 +427,7 @@ a:link {
 }
 
 input:checked + .slider {
-  background-color: #444;
+  background-color: var(--accent-color);
 }
 
 input:focus + .slider {

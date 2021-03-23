@@ -60,7 +60,7 @@ var letterIndex 	= 0;  // Keeps track of where in a word the user is
 					      // Decrement for backspace, and reset for the other 2
 var onlyLower		= true;  // If only lower is true, incude only words
 					      // without capital letters
-var mapping 		= true;  // if true, user keybard input will be mapped to the chosen layout. No mapping otherwise
+var mapping 		= false;  // if true, user keybard input will be mapped to the chosen layout. No mapping otherwise
 var answerString = "";		  // A string representation of the words for the current test. After a correct word is typed,
 						  // it is removed from the beginning of answerString. By the end of the test, there should be 
 						  // no words in answerString
