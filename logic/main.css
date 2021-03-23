@@ -360,8 +360,9 @@ input {
 
 .bottomText {
 	position: absolute;
-	font-size: 2vmin;
+	font-size: 1vmin;
 	bottom: 0;
+	text-align: center;
 }
 
 a:link {
