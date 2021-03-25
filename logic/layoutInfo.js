@@ -30,11 +30,11 @@ levelDictionaries = {
 	},
 	colemakdh : {
 		'lvl1' : 'arstneio',
-		'lvl2' : 'gm',
-		'lvl3' : 'pbjl',
-		'lvl4' : 'cdvk',
-		'lvl5' : 'wfuy',
-		'lvl6' : 'qzxh',
+		'lvl2' : 'dh',
+		'lvl3' : 'wfyu',
+		'lvl4' : 'plgm',
+		'lvl5' : 'bcvk',
+		'lvl6' : 'qxjz',
 		'lvl7' : alphabet,
 	},
 	lefthandeddvorak : {
