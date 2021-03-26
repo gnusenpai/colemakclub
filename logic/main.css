@@ -554,11 +554,11 @@ input:checked + .slider:before {
 	        filter: brightness(1.2);
 }
 
-.homeRow {
+/*.homeRow {
 	border-color: var(--secondary-accent-color);
 	color: var(--secondary-accent-color);
 	opacity: 1;
-}
+}*/
 
 .restingPosition {
 	text-decoration: underline;
@@ -566,10 +566,18 @@ input:checked + .slider:before {
 
 .active {
 	border-color: var(--accent-color);
-	color: var(--accent-color);
+	color: #222222;
 	opacity: 1;
-	-webkit-filter: brightness(1.5);
-	        filter: brightness(1.5);
+	/*-webkit-filter: brightness(1.5);
+	        filter: brightness(1.5);*/
+}
+
+.homeRow {
+	border-color: var(--tertiary-accent-color) !important;
+	color: #ffffff !important;
+	opacity: 1 !important;
+	-webkit-filter: brightness(1.2) !important;
+	        filter: brightness(1.2) !important;
 }
 
 
