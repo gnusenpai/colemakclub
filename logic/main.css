@@ -484,6 +484,26 @@ input:checked + .slider:before {
 	vertical-align: top;
 }
 
+#KeyQ, #KeyA, #KeyZ, #KeyP, #Semicolon, #Slash {
+	background-color: #80c4c4;
+}
+
+#KeyW, #KeyS, #KeyX, #KeyO, #KeyL, #Period {
+	background-color: #ca80ca;
+}
+
+#KeyE, #KeyD, #KeyC, #KeyI, #KeyK, #Comma {
+	background-color: #80b780;
+}
+
+#KeyR, #KeyF, #KeyV, #KeyT, #KeyG, #KeyB {
+	background-color: #7a93c0;
+}
+
+#KeyY, #KeyH, #KeyN, #KeyU, #KeyJ, #KeyM {
+	background-color: #8080ca;
+}
+
 .letter {
 	display: block;
 	font-size: 2.2vh;
