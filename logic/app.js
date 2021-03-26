@@ -60,7 +60,6 @@ var letterIndex 	= 0;  // Keeps track of where in a word the user is
 					      // Decrement for backspace, and reset for the other 2
 var onlyLower		= true;  // If only lower is true, incude only words
 					      // without capital letters
-var mapping 		= false;  // if true, user keybard input will be mapped to the chosen layout. No mapping otherwise
 var answerString = "";		  // A string representation of the words for the current test. After a correct word is typed,
 						  // it is removed from the beginning of answerString. By the end of the test, there should be 
 						  // no words in answerString
@@ -111,6 +110,12 @@ function start() {
 	inputKeyboard.innerHTML = customLayout;
 	// scoreMax = wordLimitModeInput.value;
 	customInput.style.display = 'flex';
+	
+	// if true, user keyboard input will be mapped to the chosen layout. No mapping otherwise
+	if (localStorage.getItem('keyRemapping') === 'true') {
+		mappingStatusButton.checked = 'checked';
+		mappingStatusText.innerText = 'on';
+	}
 }
 
 
@@ -693,7 +698,7 @@ input.addEventListener('keydown', (e)=> {
 	let char = e.code;
 
 	// prevent default char from being typed and replace new char from keyboard map
-	if (mapping) {
+	if (localStorage.getItem('keyRemapping') === 'true') {
 		if(char in keyboardMap && gameOn) {
 			if(!e.shiftKey) {
 				input.value += keyboardMap[char];
@@ -965,15 +970,15 @@ function updateCheatsheetStyling(level) {
 
 // listener for keyboard mapping toggle switch
 mappingStatusButton.addEventListener('click', ()=> {
-	if(mappingStatusText.innerHTML == 'on') {
+	if (localStorage.getItem('keyRemapping') === 'true') {
 		// change the status text
-		mappingStatusText.innerHTML = 'off';
-		mapping = false;
+		mappingStatusText.innerText = 'off';
+		localStorage.setItem('keyRemapping', false);
 
 	} else {
 		// change the status text
-		mappingStatusText.innerHTML = 'on';
-		mapping = true;
+		mappingStatusText.innerText = 'on';
+		localStorage.setItem('keyRemapping', true);
 	}
 
 	// change focus back to input
