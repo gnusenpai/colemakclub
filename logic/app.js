@@ -205,23 +205,27 @@ fullSentenceModeToggle.addEventListener('click', ()=> {
 // time limit mode button; if this is checked, uncheck button for word limit and vice versa
 // Toggle display of time limit mode input field
 timeLimitModeButton.addEventListener('click', ()=> {
-	// change mode logic here
-	timeLimitMode = true;
-	seconds = timeLimitModeInput.value%60;
-	minutes = Math.floor(timeLimitModeInput.value/60);
-	scoreText.style.display = 'none';
+	if(timeLimitMode == true) {
+		timeLimitModeButton.checked = true;
+	} else {
+		// change mode logic here
+		timeLimitMode = true;
+		seconds = timeLimitModeInput.value%60;
+		minutes = Math.floor(timeLimitModeInput.value/60);
+		scoreText.style.display = 'none';
 
-	// make the word list long enough so that no human typer can reach the end
-	scoreMax = timeLimitModeInput.value*4;
+		// make the word list long enough so that no human typer can reach the end
+		scoreMax = timeLimitModeInput.value*4;
 
-	// toggle value of word limit mode button
-	wordLimitModeButton.checked = !wordLimitModeButton.checked;
+		// toggle value of word limit mode button
+		wordLimitModeButton.checked = !wordLimitModeButton.checked;
 
-	// toggle display of input fields
-	timeLimitModeInput.classList.toggle('noDisplay');
-	wordLimitModeInput.classList.toggle('noDisplay');
+		// toggle display of input fields
+		timeLimitModeInput.classList.toggle('noDisplay');
+		wordLimitModeInput.classList.toggle('noDisplay');
 
-	reset();
+		reset();
+	}
 });
 
 // time limit mode field
@@ -248,23 +252,27 @@ timeLimitModeInput.addEventListener('change', ()=> {
 // word Limit mode butto; if this is checked, uncheck button for time limit and vice versa
 // Toggle display of word limit mode input field
 wordLimitModeButton.addEventListener('click', ()=> {
-	// change mode logic here
-	timeLimitMode = false;
-	seconds = 0;
-	minutes = 0;
-	scoreText.style.display = 'flex';
+	if(timeLimitMode == false) {
+		wordLimitModeButton.checked = true;
+	} else {
+		// change mode logic here
+		timeLimitMode = false;
+		seconds = 0;
+		minutes = 0;
+		scoreText.style.display = 'flex';
 
-	// set score max back to the chosen value
-	scoreMax = wordLimitModeInput.value;
+		// set score max back to the chosen value
+		scoreMax = wordLimitModeInput.value;
 
-	// toggle value of time limit mode button
-	timeLimitModeButton.checked = !timeLimitModeButton.checked;
+		// toggle value of time limit mode button
+		timeLimitModeButton.checked = !timeLimitModeButton.checked;
 
-	// toggle display of input fields
-	timeLimitModeInput.classList.toggle('noDisplay');
-	wordLimitModeInput.classList.toggle('noDisplay');
+		// toggle display of input fields
+		timeLimitModeInput.classList.toggle('noDisplay');
+		wordLimitModeInput.classList.toggle('noDisplay');
 
-	reset();
+		reset();
+	}
 });
 
 // word Limit input field
