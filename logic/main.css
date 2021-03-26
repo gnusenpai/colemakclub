@@ -471,6 +471,7 @@ input:checked + .slider:before {
 	-webkit-box-align: center;
 	    -ms-flex-align: center;
 	        align-items: center;
+	color: #222222;
 	background-color: transparent;
 	border: .2vh solid var(--accent-color);
 	height: 75%;
@@ -547,7 +548,7 @@ input:checked + .slider:before {
 
 .currentLevelKeys {
 	border-color: var(--tertiary-accent-color);
-	color: var(--tertiary-accent-color);
+	color: #ffffff;
 	opacity: 1;
 	-webkit-filter: brightness(1.2);
 	        filter: brightness(1.2);
