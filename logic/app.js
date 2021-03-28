@@ -953,6 +953,7 @@ function updateCheatsheetStyling(level) {
 					n.classList.remove('active');
 					n.classList.add('punctuation');
 				}else if(i==0){
+					n.classList.add('active');
 					n.classList.add('homeRow');
 				}else if(i==6){
 					// all words selected
@@ -962,6 +963,10 @@ function updateCheatsheetStyling(level) {
 				}else {
 					n.classList.add('active');
 				}
+			}
+
+			if(i==1) {
+				n.classList.remove('homeRow');
 			}
 		}
 
