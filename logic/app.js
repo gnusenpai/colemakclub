@@ -69,7 +69,7 @@ var currentLayout = 'colemak';
 var shiftDown 			= false; // tracks whether the shift key is currently being pushed
 var fullSentenceMode 	= false; // if true, all prompts will be replace with sentences
 var fullSentenceModeEnabled = localStorage.getItem('fullSentenceModeEnabled') === 'true';
-var timeLimitMode 		= false;
+var timeLimitMode 		= localStorage.getItem('timeLimitMode') === 'true';
 var wordScrollingMode 	= !localStorage.getItem('wordScrollingMode') || localStorage.getItem('wordScrollingMode') === 'true';  // true by default.
 var deleteFirstLine		= false; // make this true every time we finish typing a line
 var deleteLatestWord    = false; // if true, delete last word typed. Set to true whenever a word is finished
@@ -120,6 +120,10 @@ function start() {
 		toggleFullSentenceModeUI();
 	}
 
+	if (timeLimitMode) {
+		toggleTimeLimitModeUI();
+	}
+
 	// if true, user keyboard input will be mapped to the chosen layout. No mapping otherwise
 	if (localStorage.getItem('keyRemapping') === 'true') {
 		mappingStatusButton.checked = 'checked';
@@ -130,6 +134,8 @@ function start() {
 	punctuationModeButton.checked = punctuation;
 	fullSentenceModeToggle.checked = fullSentenceModeEnabled;
 	wordScrollingModeButton.checked = wordScrollingMode;
+	timeLimitModeButton.checked = timeLimitMode;
+	wordLimitModeButton.checked = !timeLimitMode;
 
 	if (localStorage.getItem('preferenceMenu')) {
 		openMenu();
@@ -242,28 +248,32 @@ fullSentenceModeToggle.addEventListener('click', ()=> {
 	reset();
 });
 
-// time limit mode button; if this is checked, uncheck button for word limit and vice versa
 // Toggle display of time limit mode input field
+function toggleTimeLimitModeUI() {
+	seconds = timeLimitModeInput.value%60;
+	minutes = Math.floor(timeLimitModeInput.value/60);
+	scoreText.style.display = 'none';
+
+	// make the word list long enough so that no human typer can reach the end
+	scoreMax = timeLimitModeInput.value*4;
+
+	// toggle value of word limit mode button
+	wordLimitModeButton.checked = !wordLimitModeButton.checked;
+
+	// toggle display of input fields
+	timeLimitModeInput.classList.toggle('noDisplay');
+	wordLimitModeInput.classList.toggle('noDisplay');
+}
+
+// time limit mode button; if this is checked, uncheck button for word limit and vice versa
 timeLimitModeButton.addEventListener('click', ()=> {
 	if(timeLimitMode == true) {
 		timeLimitModeButton.checked = true;
 	} else {
 		// change mode logic here
 		timeLimitMode = true;
-		seconds = timeLimitModeInput.value%60;
-		minutes = Math.floor(timeLimitModeInput.value/60);
-		scoreText.style.display = 'none';
-
-		// make the word list long enough so that no human typer can reach the end
-		scoreMax = timeLimitModeInput.value*4;
-
-		// toggle value of word limit mode button
-		wordLimitModeButton.checked = !wordLimitModeButton.checked;
-
-		// toggle display of input fields
-		timeLimitModeInput.classList.toggle('noDisplay');
-		wordLimitModeInput.classList.toggle('noDisplay');
-
+		toggleTimeLimitModeUI();
+		localStorage.setItem('timeLimitMode', timeLimitMode);
 		reset();
 	}
 });
@@ -310,6 +320,8 @@ wordLimitModeButton.addEventListener('click', ()=> {
 		// toggle display of input fields
 		timeLimitModeInput.classList.toggle('noDisplay');
 		wordLimitModeInput.classList.toggle('noDisplay');
+
+		localStorage.setItem('timeLimitMode', timeLimitMode);
 
 		reset();
 	}
