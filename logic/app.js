@@ -65,7 +65,7 @@ var answerString = "";		  // A string representation of the words for the curren
 						  // no words in answerString
 var keyboardMap = layoutMaps['colemak'];
 var letterDictionary = levelDictionaries['colemak'];
-var currentLayout = 'colemak';
+var currentLayout = localStorage.getItem('currentLayout') || 'colemak';
 var shiftDown 			= false; // tracks whether the shift key is currently being pushed
 var fullSentenceMode 	= false; // if true, all prompts will be replace with sentences
 var fullSentenceModeEnabled = localStorage.getItem('fullSentenceModeEnabled') === 'true';
@@ -130,6 +130,7 @@ function start() {
 		mappingStatusText.innerText = 'on';
 	}
 
+	select.value = currentLayout;
 	capitalLettersAllowed.checked = !onlyLower;
 	punctuationModeButton.checked = punctuation;
 	fullSentenceModeToggle.checked = fullSentenceModeEnabled;
@@ -140,6 +141,8 @@ function start() {
 	if (localStorage.getItem('preferenceMenu')) {
 		openMenu();
 	}
+
+	updateLayoutUI();
 }
 
 
@@ -385,10 +388,9 @@ punctuationModeButton.addEventListener('click', ()=> {
 /*___________________________________________________________*/
 /*______________listeners for custom ui input________________*/
 
-// listens for layout change
-select.addEventListener('change', (e)=> {
+function updateLayoutUI() {
 	// if custom input is selected, show the ui for custom keyboards
-	if(select.value == 'custom') {
+	if(currentLayout == 'custom') {
 		openUIButton.style.display = 'block';
 		startCustomKeyboardEditing();
 	}else {
@@ -396,18 +398,23 @@ select.addEventListener('change', (e)=> {
 		openUIButton.style.display = 'none';
 	}
 	// change keyboard map and key dictionary
-	keyboardMap = layoutMaps[select.value];
-	console.log(select.value);
-	letterDictionary = levelDictionaries[select.value];
-	currentLayout = select.value;
+	keyboardMap = layoutMaps[currentLayout];
+	console.log(currentLayout);
+	letterDictionary = levelDictionaries[currentLayout];
 
-	// reset everything
-	init();
-
-	if(select.value == 'custom'){
+	if(currentLayout == 'custom'){
 		customUIKeyInput.focus();
 	}
 
+}
+
+// listens for layout change
+select.addEventListener('change', (e)=> {
+	currentLayout = select.value;
+	localStorage.setItem('currentLayout', currentLayout);
+	updateLayoutUI();
+	// reset everything
+	init();
 });
 
 // listener for custom layout ui open button
