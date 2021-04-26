@@ -69,7 +69,7 @@ var currentLayout = 'colemak';
 var shiftDown 			= false; // tracks whether the shift key is currently being pushed
 var fullSentenceMode 	= false; // if true, all prompts will be replace with sentences
 var timeLimitMode 		= false;
-var wordScrollingMode 	= true;  // true by default. 
+var wordScrollingMode 	= !localStorage.getItem('wordScrollingMode') || localStorage.getItem('wordScrollingMode') === 'true';  // true by default.
 var deleteFirstLine		= false; // make this true every time we finish typing a line
 var deleteLatestWord    = false; // if true, delete last word typed. Set to true whenever a word is finished
 var sentenceStartIndex = -1; // keeps track of where we are in full sentence mode
@@ -110,7 +110,11 @@ function start() {
 	inputKeyboard.innerHTML = customLayout;
 	// scoreMax = wordLimitModeInput.value;
 	customInput.style.display = 'flex';
-	
+
+	if (!wordScrollingMode) {
+		toggleWordScrollingModeUI();
+	}
+
 	// if true, user keyboard input will be mapped to the chosen layout. No mapping otherwise
 	if (localStorage.getItem('keyRemapping') === 'true') {
 		mappingStatusButton.checked = 'checked';
@@ -118,6 +122,7 @@ function start() {
 	}
 
 	capitalLettersAllowed.checked = !onlyLower;
+	wordScrollingModeButton.checked = wordScrollingMode;
 
 	if (localStorage.getItem('preferenceMenu')) {
 		openMenu();
@@ -313,13 +318,17 @@ wordLimitModeInput.addEventListener('change', ()=> {
 	reset();
 });
 
-
 // word scrolling mode 
-wordScrollingModeButton.addEventListener('click', ()=> {
+function toggleWordScrollingModeUI() {
 	prompt.classList.toggle('paragraph');
-	wordScrollingMode = !wordScrollingMode;
 	// remove fade from parent
 	document.querySelector('#fadeElement').classList.toggle('fade');
+}
+
+wordScrollingModeButton.addEventListener('click', ()=> {
+	wordScrollingMode = !wordScrollingMode;
+	localStorage.setItem('wordScrollingMode', wordScrollingMode);
+	toggleWordScrollingModeUI();
 	reset();
 });
 
