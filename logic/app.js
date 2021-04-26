@@ -68,6 +68,7 @@ var letterDictionary = levelDictionaries['colemak'];
 var currentLayout = 'colemak';
 var shiftDown 			= false; // tracks whether the shift key is currently being pushed
 var fullSentenceMode 	= false; // if true, all prompts will be replace with sentences
+var fullSentenceModeEnabled = localStorage.getItem('fullSentenceModeEnabled') === 'true';
 var timeLimitMode 		= false;
 var wordScrollingMode 	= !localStorage.getItem('wordScrollingMode') || localStorage.getItem('wordScrollingMode') === 'true';  // true by default.
 var deleteFirstLine		= false; // make this true every time we finish typing a line
@@ -115,6 +116,10 @@ function start() {
 		toggleWordScrollingModeUI();
 	}
 
+	if (fullSentenceModeEnabled) {
+		toggleFullSentenceModeUI();
+	}
+
 	// if true, user keyboard input will be mapped to the chosen layout. No mapping otherwise
 	if (localStorage.getItem('keyRemapping') === 'true') {
 		mappingStatusButton.checked = 'checked';
@@ -123,6 +128,7 @@ function start() {
 
 	capitalLettersAllowed.checked = !onlyLower;
 	punctuationModeButton.checked = punctuation;
+	fullSentenceModeToggle.checked = fullSentenceModeEnabled;
 	wordScrollingModeButton.checked = wordScrollingMode;
 
 	if (localStorage.getItem('preferenceMenu')) {
@@ -220,13 +226,19 @@ capitalLettersAllowed.addEventListener('click', ()=> {
 });
 
 // full sentence mode
-fullSentenceModeToggle.addEventListener('click', ()=> {
+function toggleFullSentenceModeUI() {
 	fullSentenceModeLevelButton.classList.toggle('visible');
-	if(!fullSentenceModeToggle.checked){
-		switchLevel(1);
-	}else {
+	if (fullSentenceModeEnabled) {
 		switchLevel(8);
+	} else {
+		switchLevel(1);
 	}
+}
+
+fullSentenceModeToggle.addEventListener('click', ()=> {
+	fullSentenceModeEnabled = !fullSentenceModeEnabled;
+	localStorage.setItem('fullSentenceModeEnabled', fullSentenceModeEnabled);
+	toggleFullSentenceModeUI();
 	reset();
 });
 
