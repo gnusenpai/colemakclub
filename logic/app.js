@@ -53,7 +53,7 @@ var minutes 		= 0;  // tracks the number of minutes the current test has been ru
 var gameOn 			= false; // set to true when user starts typing in input field
 var correct 		= 0;  // number of correct keystrokes during a game
 var errors 			= 0;  // number of typing errors during a game
-var currentLevel 	= 1;  // int representation of the current level, which determines which letter set to test
+var currentLevel 	= localStorage.getItem('currentLevel') || 1; // int representation of the current level, which determines which letter set to test
 var correctAnswer;        // string representation of the current correct word
 var letterIndex 	= 0;  // Keeps track of where in a word the user is
 					      // Increment with every keystroke except ' ', return, and backspace
@@ -141,6 +141,8 @@ function start() {
 	if (localStorage.getItem('preferenceMenu')) {
 		openMenu();
 	}
+
+	switchLevel(currentLevel);
 
 	updateLayoutUI();
 }
@@ -237,17 +239,17 @@ capitalLettersAllowed.addEventListener('click', ()=> {
 // full sentence mode
 function toggleFullSentenceModeUI() {
 	fullSentenceModeLevelButton.classList.toggle('visible');
-	if (fullSentenceModeEnabled) {
-		switchLevel(8);
-	} else {
-		switchLevel(1);
-	}
 }
 
 fullSentenceModeToggle.addEventListener('click', ()=> {
 	fullSentenceModeEnabled = !fullSentenceModeEnabled;
 	localStorage.setItem('fullSentenceModeEnabled', fullSentenceModeEnabled);
 	toggleFullSentenceModeUI();
+	if (fullSentenceModeEnabled) {
+		switchLevel(8);
+	} else {
+		switchLevel(1);
+	}
 	reset();
 });
 
@@ -941,6 +943,7 @@ for(button of buttons) {
 
 // switches to level 
 function switchLevel(lev) {
+	localStorage.setItem('currentLevel', lev);
 	console.log(lev);
 		// stop timer
 		gameOn = false;
