@@ -30,7 +30,7 @@ customInput 	= document.querySelector('.customInput'),
 buttons 		= document.querySelector('nav').children,
 //
 currentWord 	= document.querySelector('#currentWord'),
-// layou select menu
+// layout select menu
 select 			= document.querySelector('select'),
 //
 mappingStatusButton = document.querySelector('#mappingToggle label input'),
@@ -46,7 +46,7 @@ openUIButton 		 = document.querySelector('.openUIButton'),
 customUIKeyInput = document.querySelector('#customUIKeyInput');
 
 var promptOffset 	= 0;  // is this needed? May delete
-var score;				  // tracks the current number of currect words the user has typed
+var score;				  // tracks the current number of correct words the user has typed
 var scoreMax 		= 50; // total number of words the user must type
 var seconds 		= 0;  // tracks the number of seconds%minutes*60 the current test has been running for 
 var minutes 		= 0;  // tracks the number of minutes the current test has been running for
@@ -116,6 +116,10 @@ function start() {
 		mappingStatusButton.checked = 'checked';
 		mappingStatusText.innerText = 'on';
 	}
+
+	if (localStorage.getItem('preferenceMenu')) {
+		openMenu();
+	}
 }
 
 
@@ -164,12 +168,22 @@ input.addEventListener('keydown', (e)=> {
 /*___________________________________________________________*/
 /*____________________preference menu________________________*/
 
+function openMenu() {
+	preferenceMenu.style.right = 0;
+	localStorage.setItem('preferenceMenu', 'open');
+}
+
+function closeMenu() {
+	preferenceMenu.style.right = '-37vh';
+	localStorage.removeItem('preferenceMenu');
+}
+
 // close preference menu on escape key. While we're at it, also close custom
 // ui menu
 document.addEventListener('keydown', (e)=> {
 	if(e.keyCode == 27) {
-		preferenceMenu.style.right = '-37vh';
-		
+		closeMenu();
+
 		// close custom ui menu
 		if(customInput.style.transform != 'scaleX(0)'){
 			customInput.style.transform = 'scaleX(0)';
@@ -182,12 +196,12 @@ document.addEventListener('keydown', (e)=> {
 
 // listener for preference menu button
 preferenceButton.addEventListener('click', ()=> {
-	preferenceMenu.style.right = 0;
+	openMenu();
 });
 
 // listener for preference menu close button
 closePreferenceButton.addEventListener('click', ()=> {
-	preferenceMenu.style.right = '-37vh';
+	closeMenu();
 });
 
 // capital letters allowed
@@ -413,13 +427,13 @@ discardButton.addEventListener('click', ()=> {
 // general click listener
 document.addEventListener('click', function (e) {
 
-	// close prefence menu if click is anywhere other than the preference menu
+	// close preference menu if click is anywhere other than the preference menu
 	let k = e.target.closest('.preferenceMenu');
 	if(!k){
 		k = e.target.closest('.preferenceButton');
 	}
 	if(!k) {
-		preferenceMenu.style.right = '-37vh';
+		closeMenu();
 	}
 
 
@@ -1373,7 +1387,7 @@ function handleCorrectWord() {
 
 }
 
-// updates the numerator and denomitator of the scoretext on 
+// updates the numerator and denominator of the scoretext on 
 // the document
 function updateScoreText() {
 	scoreText.innerHTML = ++score + "/" + scoreMax;
