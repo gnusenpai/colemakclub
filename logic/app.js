@@ -80,7 +80,7 @@ var wordIndex = 0;  // tracks which word you are on (ONLY IN PARAGRAPH MODE)
 var idCount = 0;
 var answerWordArray = [];
 var specialKeyCodes = [27, 9, 20, 17, 18, 93, 36, 37, 38, 39, 40, 144, 36, 8, 16, 30, 32, 13, 8]; // list of all keycodes for keys we typically want to ignore
-var punctuation = ""; // this contains puncuation to include in our test sets. Set to empty at first
+var punctuation = localStorage.getItem('punctuation') || ''; // this contains punctuation to include in our test sets. Set to empty at first
 var requiredLetters = "";//levelDictionaries[currentLayout]['lvl'+currentLevel]+punctuation;; // keeps track of letters that still need to be used in the current level
 var initialCustomKeyboardState = ''; // saves a temporary copy of a keyboard layout that a user can return to by discarding changes
 var initialCustomLevelsState = ''; // saves a temporary copy of custom levels that a user can return to by discarding changes
@@ -122,6 +122,7 @@ function start() {
 	}
 
 	capitalLettersAllowed.checked = !onlyLower;
+	punctuationModeButton.checked = punctuation;
 	wordScrollingModeButton.checked = wordScrollingMode;
 
 	if (localStorage.getItem('preferenceMenu')) {
@@ -341,6 +342,8 @@ punctuationModeButton.addEventListener('click', ()=> {
 	}else { // if turning punctuation mode off
 		punctuation = "";
 	}
+
+	localStorage.setItem('punctuation', punctuation);
 
 	createTestSets();
 	updateCheatsheetStyling(currentLevel);
