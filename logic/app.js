@@ -30,7 +30,7 @@ customInput 	= document.querySelector('.customInput'),
 buttons 		= document.querySelector('nav').children,
 //
 currentWord 	= document.querySelector('#currentWord'),
-// layou select menu
+// layout select menu
 select 			= document.querySelector('select'),
 //
 mappingStatusButton = document.querySelector('#mappingToggle label input'),
@@ -46,30 +46,31 @@ openUIButton 		 = document.querySelector('.openUIButton'),
 customUIKeyInput = document.querySelector('#customUIKeyInput');
 
 var promptOffset 	= 0;  // is this needed? May delete
-var score;				  // tracks the current number of currect words the user has typed
+var score;				  // tracks the current number of correct words the user has typed
 var scoreMax 		= 50; // total number of words the user must type
 var seconds 		= 0;  // tracks the number of seconds%minutes*60 the current test has been running for 
 var minutes 		= 0;  // tracks the number of minutes the current test has been running for
 var gameOn 			= false; // set to true when user starts typing in input field
 var correct 		= 0;  // number of correct keystrokes during a game
 var errors 			= 0;  // number of typing errors during a game
-var currentLevel 	= 1;  // int representation of the current level, which determines which letter set to test
+var currentLevel 	= localStorage.getItem('currentLevel') || 1; // int representation of the current level, which determines which letter set to test
 var correctAnswer;        // string representation of the current correct word
 var letterIndex 	= 0;  // Keeps track of where in a word the user is
 					      // Increment with every keystroke except ' ', return, and backspace
 					      // Decrement for backspace, and reset for the other 2
-var onlyLower		= true;  // If only lower is true, incude only words
+var onlyLower		= !localStorage.getItem('onlyLower') || localStorage.getItem('onlyLower') === 'true'; // If only lower is true, include only words
 					      // without capital letters
 var answerString = "";		  // A string representation of the words for the current test. After a correct word is typed,
 						  // it is removed from the beginning of answerString. By the end of the test, there should be 
 						  // no words in answerString
 var keyboardMap = layoutMaps['colemak'];
 var letterDictionary = levelDictionaries['colemak'];
-var currentLayout = 'colemak';
+var currentLayout = localStorage.getItem('currentLayout') || 'colemak';
 var shiftDown 			= false; // tracks whether the shift key is currently being pushed
 var fullSentenceMode 	= false; // if true, all prompts will be replace with sentences
-var timeLimitMode 		= false;
-var wordScrollingMode 	= true;  // true by default. 
+var fullSentenceModeEnabled = localStorage.getItem('fullSentenceModeEnabled') === 'true';
+var timeLimitMode 		= localStorage.getItem('timeLimitMode') === 'true';
+var wordScrollingMode 	= !localStorage.getItem('wordScrollingMode') || localStorage.getItem('wordScrollingMode') === 'true';  // true by default.
 var deleteFirstLine		= false; // make this true every time we finish typing a line
 var deleteLatestWord    = false; // if true, delete last word typed. Set to true whenever a word is finished
 var sentenceStartIndex = -1; // keeps track of where we are in full sentence mode
@@ -80,7 +81,7 @@ var wordIndex = 0;  // tracks which word you are on (ONLY IN PARAGRAPH MODE)
 var idCount = 0;
 var answerWordArray = [];
 var specialKeyCodes = [27, 9, 20, 17, 18, 93, 36, 37, 38, 39, 40, 144, 36, 8, 16, 30, 32, 13, 8]; // list of all keycodes for keys we typically want to ignore
-var punctuation = ""; // this contains puncuation to include in our test sets. Set to empty at first
+var punctuation = localStorage.getItem('punctuation') || ''; // this contains punctuation to include in our test sets. Set to empty at first
 var requiredLetters = "";//levelDictionaries[currentLayout]['lvl'+currentLevel]+punctuation;; // keeps track of letters that still need to be used in the current level
 var initialCustomKeyboardState = ''; // saves a temporary copy of a keyboard layout that a user can return to by discarding changes
 var initialCustomLevelsState = ''; // saves a temporary copy of custom levels that a user can return to by discarding changes
@@ -110,12 +111,40 @@ function start() {
 	inputKeyboard.innerHTML = customLayout;
 	// scoreMax = wordLimitModeInput.value;
 	customInput.style.display = 'flex';
-	
+
+	if (!wordScrollingMode) {
+		toggleWordScrollingModeUI();
+	}
+
+	if (fullSentenceModeEnabled) {
+		toggleFullSentenceModeUI();
+	}
+
+	if (timeLimitMode) {
+		toggleTimeLimitModeUI();
+	}
+
 	// if true, user keyboard input will be mapped to the chosen layout. No mapping otherwise
 	if (localStorage.getItem('keyRemapping') === 'true') {
 		mappingStatusButton.checked = 'checked';
 		mappingStatusText.innerText = 'on';
 	}
+
+	select.value = currentLayout;
+	capitalLettersAllowed.checked = !onlyLower;
+	punctuationModeButton.checked = punctuation;
+	fullSentenceModeToggle.checked = fullSentenceModeEnabled;
+	wordScrollingModeButton.checked = wordScrollingMode;
+	timeLimitModeButton.checked = timeLimitMode;
+	wordLimitModeButton.checked = !timeLimitMode;
+
+	if (localStorage.getItem('preferenceMenu')) {
+		openMenu();
+	}
+
+	switchLevel(currentLevel);
+
+	updateLayoutUI();
 }
 
 
@@ -164,12 +193,22 @@ input.addEventListener('keydown', (e)=> {
 /*___________________________________________________________*/
 /*____________________preference menu________________________*/
 
+function openMenu() {
+	preferenceMenu.style.right = 0;
+	localStorage.setItem('preferenceMenu', 'open');
+}
+
+function closeMenu() {
+	preferenceMenu.style.right = '-37vh';
+	localStorage.removeItem('preferenceMenu');
+}
+
 // close preference menu on escape key. While we're at it, also close custom
 // ui menu
 document.addEventListener('keydown', (e)=> {
 	if(e.keyCode == 27) {
-		preferenceMenu.style.right = '-37vh';
-		
+		closeMenu();
+
 		// close custom ui menu
 		if(customInput.style.transform != 'scaleX(0)'){
 			customInput.style.transform = 'scaleX(0)';
@@ -182,53 +221,64 @@ document.addEventListener('keydown', (e)=> {
 
 // listener for preference menu button
 preferenceButton.addEventListener('click', ()=> {
-	preferenceMenu.style.right = 0;
+	openMenu();
 });
 
 // listener for preference menu close button
 closePreferenceButton.addEventListener('click', ()=> {
-	preferenceMenu.style.right = '-37vh';
+	closeMenu();
 });
 
 // capital letters allowed
 capitalLettersAllowed.addEventListener('click', ()=> {
 	onlyLower = !onlyLower;
+	localStorage.setItem("onlyLower", onlyLower);
 	reset();
 });
 
 // full sentence mode
-fullSentenceModeToggle.addEventListener('click', ()=> {
+function toggleFullSentenceModeUI() {
 	fullSentenceModeLevelButton.classList.toggle('visible');
-	if(!fullSentenceModeToggle.checked){
-		switchLevel(1);
-	}else {
+}
+
+fullSentenceModeToggle.addEventListener('click', ()=> {
+	fullSentenceModeEnabled = !fullSentenceModeEnabled;
+	localStorage.setItem('fullSentenceModeEnabled', fullSentenceModeEnabled);
+	toggleFullSentenceModeUI();
+	if (fullSentenceModeEnabled) {
 		switchLevel(8);
+	} else {
+		switchLevel(1);
 	}
 	reset();
 });
 
-// time limit mode button; if this is checked, uncheck button for word limit and vice versa
 // Toggle display of time limit mode input field
+function toggleTimeLimitModeUI() {
+	seconds = timeLimitModeInput.value%60;
+	minutes = Math.floor(timeLimitModeInput.value/60);
+	scoreText.style.display = 'none';
+
+	// make the word list long enough so that no human typer can reach the end
+	scoreMax = timeLimitModeInput.value*4;
+
+	// toggle value of word limit mode button
+	wordLimitModeButton.checked = !wordLimitModeButton.checked;
+
+	// toggle display of input fields
+	timeLimitModeInput.classList.toggle('noDisplay');
+	wordLimitModeInput.classList.toggle('noDisplay');
+}
+
+// time limit mode button; if this is checked, uncheck button for word limit and vice versa
 timeLimitModeButton.addEventListener('click', ()=> {
 	if(timeLimitMode == true) {
 		timeLimitModeButton.checked = true;
 	} else {
 		// change mode logic here
 		timeLimitMode = true;
-		seconds = timeLimitModeInput.value%60;
-		minutes = Math.floor(timeLimitModeInput.value/60);
-		scoreText.style.display = 'none';
-
-		// make the word list long enough so that no human typer can reach the end
-		scoreMax = timeLimitModeInput.value*4;
-
-		// toggle value of word limit mode button
-		wordLimitModeButton.checked = !wordLimitModeButton.checked;
-
-		// toggle display of input fields
-		timeLimitModeInput.classList.toggle('noDisplay');
-		wordLimitModeInput.classList.toggle('noDisplay');
-
+		toggleTimeLimitModeUI();
+		localStorage.setItem('timeLimitMode', timeLimitMode);
 		reset();
 	}
 });
@@ -276,6 +326,8 @@ wordLimitModeButton.addEventListener('click', ()=> {
 		timeLimitModeInput.classList.toggle('noDisplay');
 		wordLimitModeInput.classList.toggle('noDisplay');
 
+		localStorage.setItem('timeLimitMode', timeLimitMode);
+
 		reset();
 	}
 });
@@ -296,13 +348,17 @@ wordLimitModeInput.addEventListener('change', ()=> {
 	reset();
 });
 
-
 // word scrolling mode 
-wordScrollingModeButton.addEventListener('click', ()=> {
+function toggleWordScrollingModeUI() {
 	prompt.classList.toggle('paragraph');
-	wordScrollingMode = !wordScrollingMode;
 	// remove fade from parent
 	document.querySelector('#fadeElement').classList.toggle('fade');
+}
+
+wordScrollingModeButton.addEventListener('click', ()=> {
+	wordScrollingMode = !wordScrollingMode;
+	localStorage.setItem('wordScrollingMode', wordScrollingMode);
+	toggleWordScrollingModeUI();
 	reset();
 });
 
@@ -315,6 +371,8 @@ punctuationModeButton.addEventListener('click', ()=> {
 	}else { // if turning punctuation mode off
 		punctuation = "";
 	}
+
+	localStorage.setItem('punctuation', punctuation);
 
 	createTestSets();
 	updateCheatsheetStyling(currentLevel);
@@ -332,10 +390,9 @@ punctuationModeButton.addEventListener('click', ()=> {
 /*___________________________________________________________*/
 /*______________listeners for custom ui input________________*/
 
-// listens for layout change
-select.addEventListener('change', (e)=> {
+function updateLayoutUI() {
 	// if custom input is selected, show the ui for custom keyboards
-	if(select.value == 'custom') {
+	if(currentLayout == 'custom') {
 		openUIButton.style.display = 'block';
 		startCustomKeyboardEditing();
 	}else {
@@ -343,18 +400,23 @@ select.addEventListener('change', (e)=> {
 		openUIButton.style.display = 'none';
 	}
 	// change keyboard map and key dictionary
-	keyboardMap = layoutMaps[select.value];
-	console.log(select.value);
-	letterDictionary = levelDictionaries[select.value];
-	currentLayout = select.value;
+	keyboardMap = layoutMaps[currentLayout];
+	console.log(currentLayout);
+	letterDictionary = levelDictionaries[currentLayout];
 
-	// reset everything
-	init();
-
-	if(select.value == 'custom'){
+	if(currentLayout == 'custom'){
 		customUIKeyInput.focus();
 	}
 
+}
+
+// listens for layout change
+select.addEventListener('change', (e)=> {
+	currentLayout = select.value;
+	localStorage.setItem('currentLayout', currentLayout);
+	updateLayoutUI();
+	// reset everything
+	init();
 });
 
 // listener for custom layout ui open button
@@ -413,13 +475,13 @@ discardButton.addEventListener('click', ()=> {
 // general click listener
 document.addEventListener('click', function (e) {
 
-	// close prefence menu if click is anywhere other than the preference menu
+	// close preference menu if click is anywhere other than the preference menu
 	let k = e.target.closest('.preferenceMenu');
 	if(!k){
 		k = e.target.closest('.preferenceButton');
 	}
 	if(!k) {
-		preferenceMenu.style.right = '-37vh';
+		closeMenu();
 	}
 
 
@@ -881,6 +943,7 @@ for(button of buttons) {
 
 // switches to level 
 function switchLevel(lev) {
+	localStorage.setItem('currentLevel', lev);
 	console.log(lev);
 		// stop timer
 		gameOn = false;
@@ -1373,7 +1436,7 @@ function handleCorrectWord() {
 
 }
 
-// updates the numerator and denomitator of the scoretext on 
+// updates the numerator and denominator of the scoretext on 
 // the document
 function updateScoreText() {
 	scoreText.innerHTML = ++score + "/" + scoreMax;
