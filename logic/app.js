@@ -47,7 +47,7 @@ customUIKeyInput = document.querySelector('#customUIKeyInput');
 
 var promptOffset 	= 0;  // is this needed? May delete
 var score;				  // tracks the current number of correct words the user has typed
-var scoreMax 		= 50; // total number of words the user must type
+var scoreMax 		= localStorage.getItem('scoreMax') || 50; // total number of words the user must type
 var seconds 		= 0;  // tracks the number of seconds%minutes*60 the current test has been running for 
 var minutes 		= 0;  // tracks the number of minutes the current test has been running for
 var gameOn 			= false; // set to true when user starts typing in input field
@@ -136,6 +136,7 @@ function start() {
 	wordScrollingModeButton.checked = wordScrollingMode;
 	timeLimitModeButton.checked = timeLimitMode;
 	wordLimitModeButton.checked = !timeLimitMode;
+	wordLimitModeInput.value = scoreMax;
 
 	if (localStorage.getItem('preferenceMenu')) {
 		openMenu();
@@ -343,6 +344,8 @@ wordLimitModeInput.addEventListener('change', ()=> {
 		scoreMax = 10;
 		wordLimitModeInput.value = 10;
 	}
+
+	localStorage.setItem('scoreMax', scoreMax);
 
 	reset();
 });
