@@ -854,8 +854,10 @@ input.addEventListener('keydown', (e)=> {
 	// if we have a backspace, decrement letter index and role back the input value
 	if(e.keyCode == 8) {
 		//console.log('backspace');
-		input.value = input.value.substr(0,input.value.length-1);
-		letterIndex--;
+		if(!e.ctrlKey) {
+			input.value = input.value.substr(0,input.value.length-1);
+			letterIndex--;
+		}
 		// letter index cannot be < 0
 		if(letterIndex < 0) {
 			letterIndex = 0;
@@ -881,7 +883,13 @@ input.addEventListener('keydown', (e)=> {
 			}
 		}else {
 			// if backspace, color it grey again
-			if(prompt.children[0].children[wordIndex].children[letterIndex]) {
+			if(e.ctrlKey) {
+				for (let i = 0; i < letterIndex; i++) {
+					prompt.children[0].children[wordIndex].children[i].style.color = 'gray';
+				}
+				input.value = "";
+				letterIndex = 0;
+			} else {
 				prompt.children[0].children[wordIndex].children[letterIndex].style.color = 'gray';
 			}
 		}
@@ -896,7 +904,13 @@ input.addEventListener('keydown', (e)=> {
 			}
 		}else {
 			// if backspace, color it grey again
-			if(prompt.children[0].children[wordIndex].children[letterIndex]) {
+			if(e.ctrlKey) {
+				for (let i = 0; i < letterIndex; i++) {
+					prompt.children[0].children[wordIndex].children[i].style.color = 'gray';
+				}
+				input.value = "";
+				letterIndex = 0;
+			} else {
 				prompt.children[0].children[wordIndex].children[letterIndex].style.color = 'gray';
 			}
 		}
