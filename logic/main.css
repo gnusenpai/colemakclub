@@ -291,10 +291,8 @@ button:focus {
 }
 
 .paragraph {
-	color: grey;
 	word-wrap: break-word;
 	width: 103%;
-	font-size: 2.4vmin;
 	margin: 6.5vmin auto 0 auto;
 }
 
