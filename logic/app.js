@@ -888,12 +888,16 @@ input.addEventListener('keydown', (e)=> {
 			// if backspace, color it grey again
 			if(e.ctrlKey) {
 				for (let i = 0; i < letterIndex; i++) {
-					prompt.children[0].children[wordIndex].children[i].style.color = 'gray';
+					if(prompt.children[0].children[wordIndex].children[i]) {
+						prompt.children[0].children[wordIndex].children[i].style.color = 'gray';
+					}
 				}
 				input.value = "";
 				letterIndex = 0;
 			} else {
-				prompt.children[0].children[wordIndex].children[letterIndex].style.color = 'gray';
+				if(prompt.children[0].children[wordIndex].children[letterIndex]) {
+					prompt.children[0].children[wordIndex].children[letterIndex].style.color = 'gray';
+				}
 			}
 		}
 	}else {
@@ -909,12 +913,16 @@ input.addEventListener('keydown', (e)=> {
 			// if backspace, color it grey again
 			if(e.ctrlKey) {
 				for (let i = 0; i < letterIndex; i++) {
-					prompt.children[0].children[wordIndex].children[i].style.color = 'gray';
+					if(prompt.children[0].children[wordIndex].children[i]) {
+						prompt.children[0].children[wordIndex].children[i].style.color = 'gray';
+					}
 				}
 				input.value = "";
 				letterIndex = 0;
 			} else {
-				prompt.children[0].children[wordIndex].children[letterIndex].style.color = 'gray';
+				if(prompt.children[0].children[wordIndex].children[letterIndex]) {
+					prompt.children[0].children[wordIndex].children[letterIndex].style.color = 'gray';
+				}
 			}
 		}
 	}
