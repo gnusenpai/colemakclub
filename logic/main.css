@@ -469,6 +469,7 @@ input:checked + .slider:before {
 	-webkit-box-align: center;
 	    -ms-flex-align: center;
 	        align-items: center;
+	color: #222222;
 	background-color: transparent;
 	border: .2vh solid var(--accent-color);
 	height: 75%;
@@ -480,6 +481,26 @@ input:checked + .slider:before {
 	border-bottom-left-radius: 7%;*/
 
 	vertical-align: top;
+}
+
+#KeyQ, #KeyA, #KeyZ, #KeyP, #Semicolon, #Slash {
+	background-color: #80c4c4;
+}
+
+#KeyW, #KeyS, #KeyX, #KeyO, #KeyL, #Period {
+	background-color: #ca80ca;
+}
+
+#KeyE, #KeyD, #KeyC, #KeyI, #KeyK, #Comma {
+	background-color: #80b780;
+}
+
+#KeyR, #KeyF, #KeyV, #KeyT, #KeyG, #KeyB {
+	background-color: #7a93c0;
+}
+
+#KeyY, #KeyH, #KeyN, #KeyU, #KeyJ, #KeyM {
+	background-color: #8080ca;
 }
 
 .letter {
@@ -525,17 +546,17 @@ input:checked + .slider:before {
 
 .currentLevelKeys {
 	border-color: var(--tertiary-accent-color);
-	color: var(--tertiary-accent-color);
+	color: #ffffff;
 	opacity: 1;
 	-webkit-filter: brightness(1.2);
 	        filter: brightness(1.2);
 }
 
-.homeRow {
+/*.homeRow {
 	border-color: var(--secondary-accent-color);
 	color: var(--secondary-accent-color);
 	opacity: 1;
-}
+}*/
 
 .restingPosition {
 	text-decoration: underline;
@@ -543,10 +564,18 @@ input:checked + .slider:before {
 
 .active {
 	border-color: var(--accent-color);
-	color: var(--accent-color);
+	color: #222222;
 	opacity: 1;
-	-webkit-filter: brightness(1.5);
-	        filter: brightness(1.5);
+	/*-webkit-filter: brightness(1.5);
+	        filter: brightness(1.5);*/
+}
+
+.homeRow {
+	border-color: var(--tertiary-accent-color) !important;
+	color: #ffffff !important;
+	opacity: 1 !important;
+	-webkit-filter: brightness(1.2) !important;
+	        filter: brightness(1.2) !important;
 }
 
 
