@@ -69,6 +69,7 @@ var currentLayout = localStorage.getItem('currentLayout') || 'colemak';
 var shiftDown 			= false; // tracks whether the shift key is currently being pushed
 var fullSentenceMode 	= false; // if true, all prompts will be replace with sentences
 var fullSentenceModeEnabled = localStorage.getItem('fullSentenceModeEnabled') === 'true';
+var requireBackspaceCorrection = localStorage.getItem('requireBackspaceCorrection') === 'true';
 var timeLimitMode 		= localStorage.getItem('timeLimitMode') === 'true';
 var wordScrollingMode 	= !localStorage.getItem('wordScrollingMode') || localStorage.getItem('wordScrollingMode') === 'true';  // true by default.
 var deleteFirstLine		= false; // make this true every time we finish typing a line
@@ -93,6 +94,7 @@ closePreferenceButton 		= document.querySelector('.closePreferenceButton'),
 capitalLettersAllowed 		= document.querySelector('.capitalLettersAllowed'),
 fullSentenceModeToggle		= document.querySelector('.fullSentenceMode'),
 fullSentenceModeLevelButton	= document.querySelector('.lvl8'),
+requireBackspaceCorrectionToggle = document.querySelector('.requireBackspaceCorrectionToggle'),
 wordLimitModeButton			= document.querySelector('.wordLimitModeButton'),
 wordLimitModeInput			= document.querySelector('.wordLimitModeInput'),
 timeLimitModeButton			= document.querySelector('.timeLimitModeButton'),
@@ -132,6 +134,7 @@ function start() {
 	select.value = currentLayout;
 	capitalLettersAllowed.checked = !onlyLower;
 	punctuationModeButton.checked = punctuation;
+	requireBackspaceCorrectionToggle.checked = requireBackspaceCorrection;	
 	fullSentenceModeToggle.checked = fullSentenceModeEnabled;
 	wordScrollingModeButton.checked = wordScrollingMode;
 	timeLimitModeButton.checked = timeLimitMode;
@@ -233,6 +236,12 @@ closePreferenceButton.addEventListener('click', ()=> {
 capitalLettersAllowed.addEventListener('click', ()=> {
 	onlyLower = !onlyLower;
 	localStorage.setItem("onlyLower", onlyLower);
+	reset();
+});
+
+requireBackspaceCorrectionToggle.addEventListener('click', ()=> {
+	requireBackspaceCorrection = !requireBackspaceCorrection;
+	localStorage.setItem("requireBackspaceCorrection", requireBackspaceCorrection);
 	reset();
 });
 
@@ -925,6 +934,17 @@ input.addEventListener('keydown', (e)=> {
 				}
 			}
 		}
+
+		if(!requireBackspaceCorrection && !checkAnswerToIndex()){
+			//ignore input if the wrong char was typed (negate need to backspace errors - akin to KeyBr.com's behaviour)
+			letterIndex--;
+			input.value = input.value.substr(0,input.value.length-1);
+
+			// letter index cannot be < 0
+			if(letterIndex < 0) {
+				letterIndex = 0;
+			}
+		}	
 	}
 	
 	//console.log('errors: ' + errors + ' \n correct: ' + correct);
