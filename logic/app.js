@@ -69,7 +69,7 @@ var currentLayout = localStorage.getItem('currentLayout') || 'colemak';
 var shiftDown 			= false; // tracks whether the shift key is currently being pushed
 var fullSentenceMode 	= false; // if true, all prompts will be replace with sentences
 var fullSentenceModeEnabled = localStorage.getItem('fullSentenceModeEnabled') === 'true';
-var requireBackspaceCorrection = localStorage.getItem('requireBackspaceCorrection') === 'true';
+var requireBackspaceCorrection = !localStorage.getItem('requireBackspaceCorrection') || localStorage.getItem('requireBackspaceCorrection') === 'true';
 var timeLimitMode 		= localStorage.getItem('timeLimitMode') === 'true';
 var wordScrollingMode 	= !localStorage.getItem('wordScrollingMode') || localStorage.getItem('wordScrollingMode') === 'true';  // true by default.
 var deleteFirstLine		= false; // make this true every time we finish typing a line
