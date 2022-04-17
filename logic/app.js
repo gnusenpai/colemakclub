@@ -76,7 +76,7 @@ var deleteFirstLine		= false; // make this true every time we finish typing a li
 var deleteLatestWord    = false; // if true, delete last word typed. Set to true whenever a word is finished
 var sentenceStartIndex = -1; // keeps track of where we are in full sentence mode
 var sentenceEndIndex;
-var lineLength = 33;
+var lineLength = 23;
 var lineIndex = 0;  // tracks which line of the prompt we are currently on
 var wordIndex = 0;  // tracks which word you are on (ONLY IN PARAGRAPH MODE)
 var idCount = 0;

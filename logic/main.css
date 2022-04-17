@@ -275,7 +275,7 @@ button:focus {
 
 .prompt {
 	position: relative;
-	font-size: 2vmax;
+	font-size: 2.5em;
 	/*padding: 0 20vh 0 0;*/
 	/*width: 100%;*/
 	/*color: white;*/
@@ -292,7 +292,7 @@ button:focus {
 
 .paragraph {
 	word-wrap: break-word;
-	width: 103%;
+	width: 100%;
 	margin: 6.5vmin auto 0 auto;
 }
 
