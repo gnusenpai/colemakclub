@@ -7,11 +7,11 @@ Colemak Club is currently hosted on my website at [gnusenpai.net](https://gnusen
 
 ### Features/Improvements
 * Corrected Colemak-DH
+* ANSI/ISO/Ortho keyboard selection
 * Various usability/rendering fixes
 * More accurate physical keyboard representation
 * Persistent settings via Local Storage
 
 ### Plans
-* ANSI/ISO/Ortho keyboard selection
 * Visual overhaul
 * Color-coded fingermap

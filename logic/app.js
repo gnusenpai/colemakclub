@@ -66,6 +66,7 @@ var answerString = "";		  // A string representation of the words for the curren
 var keyboardMap = layoutMaps['colemak'];
 var letterDictionary = levelDictionaries['colemak'];
 var currentLayout = localStorage.getItem('currentLayout') || 'colemak';
+var currentKeyboard = localStorage.getItem('currentKeyboard') || 'ansi';
 var shiftDown 			= false; // tracks whether the shift key is currently being pushed
 var fullSentenceMode 	= false; // if true, all prompts will be replace with sentences
 var fullSentenceModeEnabled = localStorage.getItem('fullSentenceModeEnabled') === 'true';
@@ -108,7 +109,7 @@ init();
 // this is the true init, which is only called once. Init will have to be renamed
 // Call to initialize
 function start() {
-	document.querySelector('.cheatsheet').innerHTML = keyboardDivs;
+	//document.querySelector('.cheatsheet').innerHTML = keyboardDivs;
 	inputKeyboard.innerHTML = customLayout;
 	// scoreMax = wordLimitModeInput.value;
 	customInput.style.display = 'flex';
@@ -131,7 +132,8 @@ function start() {
 		mappingStatusText.innerText = 'on';
 	}
 
-	select.value = currentLayout;
+	layout.value = currentLayout;
+	keyboard.value = currentKeyboard;
 	capitalLettersAllowed.checked = !onlyLower;
 	punctuationModeButton.checked = punctuation;
 	requireBackspaceCorrectionToggle.checked = requireBackspaceCorrection;	
@@ -402,6 +404,34 @@ punctuationModeButton.addEventListener('click', ()=> {
 /*______________listeners for custom ui input________________*/
 
 function updateLayoutUI() {
+	switch (currentKeyboard) {
+		case 'ansi':
+			document.querySelector('.cheatsheet').innerHTML = ansiDivs;
+			layoutMaps.colemakdh.KeyZ = 'x';
+			layoutMaps.colemakdh.KeyX = 'c';
+			layoutMaps.colemakdh.KeyC = 'd';
+			layoutMaps.colemakdh.KeyV = 'v';
+			layoutMaps.colemakdh.KeyB = 'z';
+			break;
+		case 'iso':
+			document.querySelector('.cheatsheet').innerHTML = isoDivs;
+			layoutMaps.colemakdh.IntlBackslash = 'z';
+			layoutMaps.colemakdh.KeyZ = 'x';
+			layoutMaps.colemakdh.KeyX = 'c';
+			layoutMaps.colemakdh.KeyC = 'd';
+			layoutMaps.colemakdh.KeyV = 'v';
+			delete layoutMaps.colemakdh.KeyB;
+			break;
+		case 'ortho':
+			document.querySelector('.cheatsheet').innerHTML = orthoDivs;
+			layoutMaps.colemakdh.KeyZ = 'z';
+			layoutMaps.colemakdh.KeyX = 'x';
+			layoutMaps.colemakdh.KeyC = 'c';
+			layoutMaps.colemakdh.KeyV = 'd';
+			layoutMaps.colemakdh.KeyB = 'v';
+			break;
+	}
+
 	// if custom input is selected, show the ui for custom keyboards
 	if(currentLayout == 'custom') {
 		openUIButton.style.display = 'block';
@@ -413,6 +443,7 @@ function updateLayoutUI() {
 	// change keyboard map and key dictionary
 	keyboardMap = layoutMaps[currentLayout];
 	console.log(currentLayout);
+	console.log(currentKeyboard);
 	letterDictionary = levelDictionaries[currentLayout];
 
 	if(currentLayout == 'custom'){
@@ -422,9 +453,18 @@ function updateLayoutUI() {
 }
 
 // listens for layout change
-select.addEventListener('change', (e)=> {
-	currentLayout = select.value;
+layout.addEventListener('change', (e)=> {
+	currentLayout = layout.value;
 	localStorage.setItem('currentLayout', currentLayout);
+	updateLayoutUI();
+	// reset everything
+	init();
+});
+
+// listens for keyboard change
+keyboard.addEventListener('change', (e)=> {
+	currentKeyboard = keyboard.value;
+	localStorage.setItem('currentKeyboard', currentKeyboard);
 	updateLayoutUI();
 	// reset everything
 	init();
@@ -792,7 +832,8 @@ input.addEventListener('keydown', (e)=> {
 		//console.log(specialKeyCodes.includes(e.keyCode));
 		// there is a bug on firefox that occassionally reads e.key as process, hence the boolean expression below
 		if(!specialKeyCodes.includes(e.keyCode) || e.keyCode > 48 && e.key != "Process"){
-			console.log('Key: ' +e.key);
+			//console.log('Key: ' +e.key);
+			//console.log('Code: ' +e.code);
 			if(e.key != "Process"){
 				input.value += e.key;
 			}else {

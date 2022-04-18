@@ -11,19 +11,31 @@
 </head>
 <body>
 
-	<select  autocomplete="off">
-		<option value='colemak'>Colemak</option>
-		<option value='colemakdh'>Colemak-DH</option>
-		<option disabled/>
-		<option value='azerty'>AZERTY</option>
-		<option value='dvorak'>Dvorak</option>
-		<option value='lefthandeddvorak'>Left-handed Dvorak</option>
-		<option value='qwerty'>QWERTY</option>
-		<option value='tarmak'>Tarmak</option>
-		<option value='workman'>Workman</option>
-		<option disabled/>
-		<option value='custom'>Custom</option>
-	</select>
+	<div id='selectors'>
+		<div>
+			<select id='layout' autocomplete="off">
+				<option value='colemak'>Colemak</option>
+				<option value='colemakdh'>Colemak-DH</option>
+				<option disabled/>
+				<option value='azerty'>AZERTY</option>
+				<option value='dvorak'>Dvorak</option>
+				<option value='lefthandeddvorak'>Left-handed Dvorak</option>
+				<option value='qwerty'>QWERTY</option>
+				<option value='tarmak'>Tarmak</option>
+				<option value='workman'>Workman</option>
+				<option disabled/>
+				<option value='custom'>Custom</option>
+			</select>
+		</div>
+
+		<div>
+			<select id='keyboard' autocomplete="off">
+				<option value='ansi'>ANSI</option>
+				<option value='iso'>ISO</option>
+				<option value='ortho'>Ortho</option>
+			</select>
+		</div>
+	</div>
 
 	<button class='preferenceButton'></button>
 	<div class='preferenceMenu'>
