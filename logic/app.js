@@ -73,6 +73,7 @@ var fullSentenceModeEnabled = localStorage.getItem('fullSentenceModeEnabled') ==
 var requireBackspaceCorrection = !localStorage.getItem('requireBackspaceCorrection') || localStorage.getItem('requireBackspaceCorrection') === 'true';
 var timeLimitMode 		= localStorage.getItem('timeLimitMode') === 'true';
 var wordScrollingMode 	= !localStorage.getItem('wordScrollingMode') || localStorage.getItem('wordScrollingMode') === 'true';  // true by default.
+var showCheatsheet		= true;
 var deleteFirstLine		= false; // make this true every time we finish typing a line
 var deleteLatestWord    = false; // if true, delete last word typed. Set to true whenever a word is finished
 var sentenceStartIndex = -1; // keeps track of where we are in full sentence mode
@@ -101,7 +102,8 @@ wordLimitModeInput			= document.querySelector('.wordLimitModeInput'),
 timeLimitModeButton			= document.querySelector('.timeLimitModeButton'),
 timeLimitModeInput			= document.querySelector('.timeLimitModeInput')
 wordScrollingModeButton		= document.querySelector('.wordScrollingModeButton'),
-punctuationModeButton       = document.querySelector('.punctuationModeButton');
+punctuationModeButton       = document.querySelector('.punctuationModeButton'),
+showCheatsheetButton		= document.querySelector('.showCheatsheetButton');
 
 start();
 init();
@@ -142,6 +144,7 @@ function start() {
 	timeLimitModeButton.checked = timeLimitMode;
 	wordLimitModeButton.checked = !timeLimitMode;
 	wordLimitModeInput.value = scoreMax;
+	showCheatsheetButton.checked = showCheatsheet;
 
 	if (localStorage.getItem('preferenceMenu')) {
 		openMenu();
@@ -392,6 +395,19 @@ punctuationModeButton.addEventListener('click', ()=> {
 	reset();
 	
 
+});
+
+// show cheatsheet toggle
+showCheatsheetButton.addEventListener('click', ()=> {
+	if(showCheatsheet){
+		showCheatsheet = false
+		// hide display for cheatsheet
+		document.querySelector('.cheatsheet').classList.add('noDisplay');
+	}else{
+		showCheatsheet = true
+		// show display for cheatsheet
+		document.querySelector('.cheatsheet').classList.remove('noDisplay');
+	}
 });
 
 
