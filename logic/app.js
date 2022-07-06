@@ -433,6 +433,17 @@ function updateLayoutUI() {
 			layoutMaps.colemakdh.KeyC = 'd';
 			layoutMaps.colemakdh.KeyV = 'v';
 			layoutMaps.colemakdh.KeyB = 'z';
+
+			layoutMaps.canary.KeyZ = 'j';
+			layoutMaps.canary.KeyX = 'v';
+			layoutMaps.canary.KeyC = 'd';
+			layoutMaps.canary.KeyV = 'g';
+			layoutMaps.canary.KeyB = 'q';
+			layoutMaps.canary.KeyN = 'm';
+			layoutMaps.canary.KeyG = 'b';
+			layoutMaps.canary.KeyH = 'f';
+			layoutMaps.canary.KeyT = 'k';
+			layoutMaps.canary.KeyU = 'x';
 			break;
 		case 'iso':
 			document.querySelector('.cheatsheet').innerHTML = isoDivs;
@@ -442,6 +453,18 @@ function updateLayoutUI() {
 			layoutMaps.colemakdh.KeyC = 'd';
 			layoutMaps.colemakdh.KeyV = 'v';
 			delete layoutMaps.colemakdh.KeyB;
+
+			layoutMaps.canary.IntlBackslash = 'q';
+			layoutMaps.canary.KeyZ = 'j';
+			layoutMaps.canary.KeyX = 'v';
+			layoutMaps.canary.KeyC = 'd';
+			layoutMaps.canary.KeyV = 'g';
+			delete layoutMaps.canary.KeyB;
+			layoutMaps.canary.KeyN = 'm';
+			layoutMaps.canary.KeyG = 'b';
+			layoutMaps.canary.KeyH = 'f';
+			layoutMaps.canary.KeyT = 'k';
+			layoutMaps.canary.KeyU = 'x';
 			break;
 		case 'ortho':
 			document.querySelector('.cheatsheet').innerHTML = orthoDivs;
@@ -450,6 +473,17 @@ function updateLayoutUI() {
 			layoutMaps.colemakdh.KeyC = 'c';
 			layoutMaps.colemakdh.KeyV = 'd';
 			layoutMaps.colemakdh.KeyB = 'v';
+
+			layoutMaps.canary.KeyZ = 'q';
+			layoutMaps.canary.KeyX = 'j';
+			layoutMaps.canary.KeyC = 'v';
+			layoutMaps.canary.KeyV = 'd';
+			layoutMaps.canary.KeyB = 'k';
+			layoutMaps.canary.KeyN = 'x';
+			layoutMaps.canary.KeyG = 'g';
+			layoutMaps.canary.KeyH = 'm';
+			layoutMaps.canary.KeyT = 'b';
+			layoutMaps.canary.KeyU = 'f';
 			break;
 	}
 
