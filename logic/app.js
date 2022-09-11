@@ -439,48 +439,48 @@ playSoundOnErrorButton.addEventListener('click', ()=> {
 /*___________________________________________________________*/
 /*___________________________sound___________________________*/
 
-const errorSound = new Audio("../sound/error.wav");
+const errorSound = new Audio("sound/error.wav");
 
 const clickSounds = [
     {
       sounds: [
-        new Audio("../sound/click1.wav"),
-        new Audio("../sound/click1.wav"),
+        new Audio("sound/click1.wav"),
+        new Audio("sound/click1.wav"),
       ],
       counter: 0,
     },
     {
       sounds: [
-        new Audio("../sound/click2.wav"),
-		new Audio("../sound/click2.wav"),
+        new Audio("sound/click2.wav"),
+		new Audio("sound/click2.wav"),
       ],
       counter: 0,
     },
     {
       sounds: [
-        new Audio("../sound/click3.wav"),
-        new Audio("../sound/click3.wav"),
+        new Audio("sound/click3.wav"),
+        new Audio("sound/click3.wav"),
       ],
       counter: 0,
     },
     {
       sounds: [
-        new Audio("../sound/click4.wav"),
-		new Audio("../sound/click4.wav"),
+        new Audio("sound/click4.wav"),
+		new Audio("sound/click4.wav"),
       ],
       counter: 0,
     },
     {
       sounds: [
-        new Audio("../sound/click5.wav"),
-        new Audio("../sound/click5.wav"),
+        new Audio("sound/click5.wav"),
+        new Audio("sound/click5.wav"),
       ],
       counter: 0,
     },
     {
       sounds: [
-        new Audio("../sound/click6.wav"),
-		new Audio("../sound/click6.wav"),
+        new Audio("sound/click6.wav"),
+		new Audio("sound/click6.wav"),
       ],
       counter: 0,
     },
