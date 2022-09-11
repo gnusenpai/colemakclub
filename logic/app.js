@@ -74,6 +74,8 @@ var requireBackspaceCorrection = !localStorage.getItem('requireBackspaceCorrecti
 var timeLimitMode 		= localStorage.getItem('timeLimitMode') === 'true';
 var wordScrollingMode 	= !localStorage.getItem('wordScrollingMode') || localStorage.getItem('wordScrollingMode') === 'true';  // true by default.
 var showCheatsheet		= !localStorage.getItem('showCheatsheet') || localStorage.getItem('showCheatsheet') === 'true';  // true by default.
+var playSoundOnClick    = !localStorage.getItem('playSoundOnClick') || localStorage.getItem('playSoundOnClick') === 'true'; // true by default.
+var playSoundOnError    = !localStorage.getItem('playSoundOnError') || localStorage.getItem('playSoundOnError') === 'true'; // true by default.
 var deleteFirstLine		= false; // make this true every time we finish typing a line
 var deleteLatestWord    = false; // if true, delete last word typed. Set to true whenever a word is finished
 var sentenceStartIndex = -1; // keeps track of where we are in full sentence mode
@@ -104,6 +106,8 @@ timeLimitModeInput			= document.querySelector('.timeLimitModeInput')
 wordScrollingModeButton		= document.querySelector('.wordScrollingModeButton'),
 punctuationModeButton       = document.querySelector('.punctuationModeButton'),
 showCheatsheetButton		= document.querySelector('.showCheatsheetButton');
+playSoundOnClickButton      = document.querySelector('.playSoundOnClick');
+playSoundOnErrorButton      = document.querySelector('.playSoundOnError');
 
 start();
 init();
@@ -145,6 +149,8 @@ function start() {
 	wordLimitModeButton.checked = !timeLimitMode;
 	wordLimitModeInput.value = scoreMax;
 	showCheatsheetButton.checked = showCheatsheet;
+	playSoundOnClickButton.checked = playSoundOnClick;
+	playSoundOnErrorButton.checked = playSoundOnError;
 
 	if (localStorage.getItem('preferenceMenu')) {
 		openMenu();
@@ -415,11 +421,93 @@ showCheatsheetButton.addEventListener('click', ()=> {
 	localStorage.setItem('showCheatsheet', showCheatsheet);
 });
 
+// play sound on click toggle
+playSoundOnClickButton.addEventListener('click', ()=> {
+	playSoundOnClick = !playSoundOnClick;
+	localStorage.setItem('playSoundOnClick', playSoundOnClick);
+});
+
+// play sound on error toggle
+playSoundOnErrorButton.addEventListener('click', ()=> {
+	playSoundOnError = !playSoundOnError;
+	localStorage.setItem('playSoundOnError', playSoundOnError);
+});
 
 /*______________________preference menu______________________*/
 /*___________________________________________________________*/
 
+/*___________________________________________________________*/
+/*___________________________sound___________________________*/
 
+const errorSound = new Audio("../sound/error.wav");
+
+const clickSounds = [
+    {
+      sounds: [
+        new Audio("../sound/click1.wav"),
+        new Audio("../sound/click1.wav"),
+      ],
+      counter: 0,
+    },
+    {
+      sounds: [
+        new Audio("../sound/click2.wav"),
+		new Audio("../sound/click2.wav"),
+      ],
+      counter: 0,
+    },
+    {
+      sounds: [
+        new Audio("../sound/click3.wav"),
+        new Audio("../sound/click3.wav"),
+      ],
+      counter: 0,
+    },
+    {
+      sounds: [
+        new Audio("../sound/click4.wav"),
+		new Audio("../sound/click4.wav"),
+      ],
+      counter: 0,
+    },
+    {
+      sounds: [
+        new Audio("../sound/click5.wav"),
+        new Audio("../sound/click5.wav"),
+      ],
+      counter: 0,
+    },
+    {
+      sounds: [
+        new Audio("../sound/click6.wav"),
+		new Audio("../sound/click6.wav"),
+      ],
+      counter: 0,
+    },
+];
+
+function playClickSound() {
+  if (!playSoundOnClick) return;
+
+  const rand = Math.floor(Math.random() * 6);
+  const randomSound = clickSounds[rand];
+
+  // the duplicated sounds are used to prevent the sound from cutting off
+  randomSound.counter++;
+  if (randomSound.counter === 2) randomSound.counter = 0;
+
+  randomSound.sounds[randomSound.counter].currentTime = 0;
+  randomSound.sounds[randomSound.counter].play();
+}
+
+function playErrorSound() {
+  if (!playSoundOnError) return;
+  errorSound.currentTime = 0;
+  errorSound.play();
+}
+
+/*___________________________sound___________________________*/
+/*___________________________________________________________*/
 
 /*___________________________________________________________*/
 /*______________listeners for custom ui input________________*/
@@ -981,6 +1069,7 @@ input.addEventListener('keydown', (e)=> {
 	// check if answer is correct and apply the correct styling. 
 	// Also increment 'errors' or 'correct'
 	if(checkAnswerToIndex()) {
+		playClickSound();
 		input.style.color = 'black';
 		// no points awarded for backspace
 		if(e.keyCode != 8) {
@@ -1010,11 +1099,13 @@ input.addEventListener('keydown', (e)=> {
 		input.style.color = 'red';
 		// no points awarded for backspace
 		if(e.keyCode != 8) {
+			playErrorSound();
 			errors++;
 			if(prompt.children[0].children[wordIndex].children[letterIndex-1]) {
 				prompt.children[0].children[wordIndex].children[letterIndex-1].style.color = 'red';
 			}
 		}else {
+			playClickSound();
 			// if backspace, color it grey again
 			if(e.ctrlKey) {
 				for (let i = 0; i < letterIndex; i++) {
