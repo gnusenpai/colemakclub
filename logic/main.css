@@ -555,7 +555,8 @@ input:checked + .slider:before {
 }
 
 .restingPosition {
-	text-decoration: underline;
+	text-decoration-line: underline;
+	text-underline-offset: 4px;
 }
 
 .active {
