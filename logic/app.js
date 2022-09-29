@@ -886,7 +886,7 @@ input.addEventListener('keydown', (e)=> {
 		//console.log(e.keyCode);
 		//console.log(specialKeyCodes.includes(e.keyCode));
 		// there is a bug on firefox that occassionally reads e.key as process, hence the boolean expression below
-		if(!specialKeyCodes.includes(e.keyCode) || e.keyCode > 48 && e.key != "Process"){
+		if((!specialKeyCodes.includes(e.keyCode) || e.keyCode > 48 && e.key != "Process") && e.keyCode !== 224){
 			//console.log('Key: ' +e.key);
 			//console.log('Code: ' +e.code);
 			if(e.key != "Process"){
@@ -974,7 +974,7 @@ input.addEventListener('keydown', (e)=> {
 
 	// if key produces a character, (ie not shift, backspace, or another 
 	// utility key) increment letter index
-	if(!specialKeyCodes.includes(e.keyCode) || e.keyCode > 48){
+	if((!specialKeyCodes.includes(e.keyCode) || e.keyCode > 48) && e.keyCode !== 224){
 		letterIndex++;
 	}
 
