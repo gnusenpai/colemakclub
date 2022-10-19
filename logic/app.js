@@ -74,8 +74,8 @@ var requireBackspaceCorrection = !localStorage.getItem('requireBackspaceCorrecti
 var timeLimitMode 		= localStorage.getItem('timeLimitMode') === 'true';
 var wordScrollingMode 	= !localStorage.getItem('wordScrollingMode') || localStorage.getItem('wordScrollingMode') === 'true';  // true by default.
 var showCheatsheet		= !localStorage.getItem('showCheatsheet') || localStorage.getItem('showCheatsheet') === 'true';  // true by default.
-var playSoundOnClick    = !localStorage.getItem('playSoundOnClick') || localStorage.getItem('playSoundOnClick') === 'true'; // true by default.
-var playSoundOnError    = !localStorage.getItem('playSoundOnError') || localStorage.getItem('playSoundOnError') === 'true'; // true by default.
+var playSoundOnClick    = localStorage.getItem('playSoundOnClick') === 'true';
+var playSoundOnError    = localStorage.getItem('playSoundOnError') === 'true';
 var deleteFirstLine		= false; // make this true every time we finish typing a line
 var deleteLatestWord    = false; // if true, delete last word typed. Set to true whenever a word is finished
 var sentenceStartIndex = -1; // keeps track of where we are in full sentence mode
