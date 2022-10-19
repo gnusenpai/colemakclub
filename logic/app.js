@@ -974,7 +974,7 @@ input.addEventListener('keydown', (e)=> {
 		//console.log(e.keyCode);
 		//console.log(specialKeyCodes.includes(e.keyCode));
 		// there is a bug on firefox that occassionally reads e.key as process, hence the boolean expression below
-		if(!specialKeyCodes.includes(e.keyCode) || e.keyCode > 48 && e.key != "Process"){
+		if(!specialKeyCodes.includes(e.keyCode) && e.key != "Process") {
 			//console.log('Key: ' +e.key);
 			//console.log('Code: ' +e.code);
 			if(e.key != "Process"){
@@ -1062,49 +1062,16 @@ input.addEventListener('keydown', (e)=> {
 
 	// if key produces a character, (ie not shift, backspace, or another 
 	// utility key) increment letter index
-	if(!specialKeyCodes.includes(e.keyCode) || e.keyCode > 48){
+	if(!specialKeyCodes.includes(e.keyCode)) {
 		letterIndex++;
 	}
 
 	// check if answer is correct and apply the correct styling. 
 	// Also increment 'errors' or 'correct'
 	if(checkAnswerToIndex()) {
-		playClickSound();
 		input.style.color = 'black';
 		// no points awarded for backspace
-		if(e.keyCode != 8) {
-			correct++;
-			// if letter (in the promp) exists, color it green
-			if(prompt.children[0].children[wordIndex].children[letterIndex-1]) {
-				prompt.children[0].children[wordIndex].children[letterIndex-1].style.color = 'green';
-			}
-		}else {
-			// if backspace, color it grey again
-			if(e.ctrlKey) {
-				for (let i = 0; i < letterIndex; i++) {
-					if(prompt.children[0].children[wordIndex].children[i]) {
-						prompt.children[0].children[wordIndex].children[i].style.color = 'gray';
-					}
-				}
-				input.value = "";
-				letterIndex = 0;
-			} else {
-				if(prompt.children[0].children[wordIndex].children[letterIndex]) {
-					prompt.children[0].children[wordIndex].children[letterIndex].style.color = 'gray';
-				}
-			}
-		}
-	}else {
-		console.log('error');
-		input.style.color = 'red';
-		// no points awarded for backspace
-		if(e.keyCode != 8) {
-			playErrorSound();
-			errors++;
-			if(prompt.children[0].children[wordIndex].children[letterIndex-1]) {
-				prompt.children[0].children[wordIndex].children[letterIndex-1].style.color = 'red';
-			}
-		}else {
+		if(e.keyCode == 8) {
 			playClickSound();
 			// if backspace, color it grey again
 			if(e.ctrlKey) {
@@ -1119,6 +1086,40 @@ input.addEventListener('keydown', (e)=> {
 				if(prompt.children[0].children[wordIndex].children[letterIndex]) {
 					prompt.children[0].children[wordIndex].children[letterIndex].style.color = 'gray';
 				}
+			}
+		} else if(!specialKeyCodes.includes(e.keyCode) || e.keyCode == 32) {
+			playClickSound();
+			correct++;
+			// if letter (in the promp) exists, color it green
+			if(prompt.children[0].children[wordIndex].children[letterIndex-1]) {
+				prompt.children[0].children[wordIndex].children[letterIndex-1].style.color = 'green';
+			}
+		}
+	}else {
+		console.log('error');
+		input.style.color = 'red';
+		// no points awarded for backspace
+		if(e.keyCode == 8) {
+			playClickSound();
+			// if backspace, color it grey again
+			if(e.ctrlKey) {
+				for (let i = 0; i < letterIndex; i++) {
+					if(prompt.children[0].children[wordIndex].children[i]) {
+						prompt.children[0].children[wordIndex].children[i].style.color = 'gray';
+					}
+				}
+				input.value = "";
+				letterIndex = 0;
+			} else {
+				if(prompt.children[0].children[wordIndex].children[letterIndex]) {
+					prompt.children[0].children[wordIndex].children[letterIndex].style.color = 'gray';
+				}
+			}
+		} else if(!specialKeyCodes.includes(e.keyCode) || e.keyCode == 32) {
+			playErrorSound();
+			errors++;
+			if(prompt.children[0].children[wordIndex].children[letterIndex-1]) {
+				prompt.children[0].children[wordIndex].children[letterIndex-1].style.color = 'red';
 			}
 		}
 
