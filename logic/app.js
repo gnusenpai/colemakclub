@@ -1001,12 +1001,6 @@ input.addEventListener('keydown', (e)=> {
 	// correct word. If yes, generate new word. If no, give user
 	// negative feedback
 
-	// if on the last word, check every letter so we don't need a space to end the game
-	if(!timeLimitMode && score == scoreMax-1 && checkAnswer() && gameOn) {
-		console.log('game over');
-		endGame();
-	}
-
 	if(e.keyCode === 13 || e.keyCode === 32) {
 		if(checkAnswer() && gameOn) {
 
@@ -1134,7 +1128,13 @@ input.addEventListener('keydown', (e)=> {
 			}
 		}	
 	}
-	
+
+	// if on the last word, check every letter so we don't need a space to end the game
+	if(!timeLimitMode && score == scoreMax-1 && checkAnswer() && gameOn) {
+		console.log('game over');
+		endGame();
+	}
+
 	//console.log('errors: ' + errors + ' \n correct: ' + correct);
 	//console.log("accuracy: " + correct/(errors+correct));
 
