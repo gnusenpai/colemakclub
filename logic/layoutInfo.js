@@ -56,12 +56,12 @@ levelDictionaries = {
 		'lvl7' : alphabet,
 	},
 	tarmak : {
-		'lvl1' : 'arstneio',
-		'lvl2' : 'dh',
-		'lvl3' : 'gjvb',
-		'lvl4' : 'qwfp',
-		'lvl5' : 'luyz',
-		'lvl6' : 'cxkm',
+		'lvl1' : 'qwahzxcvbm',
+		'lvl2' : 'nek',
+		'lvl3' : 'ftg',
+		'lvl4' : 'rsd',
+		'lvl5' : 'pjyo',
+		'lvl6' : 'lui',
 		'lvl7' : alphabet,
 	},
 	workman : {
@@ -340,7 +340,7 @@ var layoutMaps = {
 		'shiftLayer' : 'default',
 	},
 	tarmak : {
-		'Minus' : "1",
+		'Minus' : "-",
 		'Equal' : "=",
 		'KeyQ' : "q",
 		'KeyW' : 'w',
