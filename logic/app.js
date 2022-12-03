@@ -583,6 +583,16 @@ function updateLayoutUI() {
 		customInput.style.transform = 'scaleX(0)';
 		openUIButton.style.display = 'none';
 	}
+
+	// level labels
+	for (let i = 1; i <= 6; i++) {
+		if(currentLayout == 'tarmak') {
+			document.querySelector('.lvl'+i).innerHTML = 'Step '+(i-1);
+		} else {
+			document.querySelector('.lvl'+i).innerHTML = 'Level '+i;
+		}
+	}
+
 	// change keyboard map and key dictionary
 	keyboardMap = layoutMaps[currentLayout];
 	console.log(currentLayout);
@@ -1164,6 +1174,9 @@ for(button of buttons) {
 		let lev = b.innerHTML.replace(/ /,'').toLowerCase();
 		// int representation of level we are choosing
 		lev = (lev[lev.length-1]);
+		if(currentLayout == 'tarmak') {
+			lev++;
+		}
 		if(b.innerHTML == 'All Words') {
 			lev = 7;
 		}else if(b.innerHTML == 'Full Sentences'){
