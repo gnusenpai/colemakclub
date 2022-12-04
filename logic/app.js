@@ -522,6 +522,14 @@ function updateLayoutUI() {
 			layoutMaps.colemakdh.KeyV = 'v';
 			layoutMaps.colemakdh.KeyB = 'z';
 
+			layoutMaps.tarmakdh.KeyZ = 'x';
+			layoutMaps.tarmakdh.KeyX = 'c';
+			layoutMaps.tarmakdh.KeyC = 'd';
+			layoutMaps.tarmakdh.KeyV = 'v';
+			layoutMaps.tarmakdh.KeyB = 'z';
+			levelDictionaries.tarmakdh.lvl1 = 'qwagv';
+			levelDictionaries.tarmakdh.lvl3 = 'ftbzxc';
+
 			layoutMaps.canary.KeyZ = 'j';
 			layoutMaps.canary.KeyX = 'v';
 			layoutMaps.canary.KeyC = 'd';
@@ -542,6 +550,15 @@ function updateLayoutUI() {
 			layoutMaps.colemakdh.KeyV = 'v';
 			delete layoutMaps.colemakdh.KeyB;
 
+			layoutMaps.tarmakdh.IntlBackslash = 'z';
+			layoutMaps.tarmakdh.KeyZ = 'x';
+			layoutMaps.tarmakdh.KeyX = 'c';
+			layoutMaps.tarmakdh.KeyC = 'd';
+			layoutMaps.tarmakdh.KeyV = 'v';
+			delete layoutMaps.tarmakdh.KeyB;
+			levelDictionaries.tarmakdh.lvl1 = 'qwagv';
+			levelDictionaries.tarmakdh.lvl3 = 'ftbzxc';
+
 			layoutMaps.canary.IntlBackslash = 'q';
 			layoutMaps.canary.KeyZ = 'j';
 			layoutMaps.canary.KeyX = 'v';
@@ -561,6 +578,14 @@ function updateLayoutUI() {
 			layoutMaps.colemakdh.KeyC = 'c';
 			layoutMaps.colemakdh.KeyV = 'd';
 			layoutMaps.colemakdh.KeyB = 'v';
+
+			layoutMaps.tarmakdh.KeyZ = 'z';
+			layoutMaps.tarmakdh.KeyX = 'x';
+			layoutMaps.tarmakdh.KeyC = 'c';
+			layoutMaps.tarmakdh.KeyV = 'd';
+			layoutMaps.tarmakdh.KeyB = 'v';
+			levelDictionaries.tarmakdh.lvl1 = 'qwagzxc';
+			levelDictionaries.tarmakdh.lvl3 = 'ftbv';
 
 			layoutMaps.canary.KeyZ = 'q';
 			layoutMaps.canary.KeyX = 'j';
@@ -586,7 +611,7 @@ function updateLayoutUI() {
 
 	// level labels
 	for (let i = 1; i <= 6; i++) {
-		if(currentLayout == 'tarmak') {
+		if(currentLayout == 'tarmak' || currentLayout == 'tarmakdh') {
 			document.querySelector('.lvl'+i).innerHTML = 'Step '+(i-1);
 		} else {
 			document.querySelector('.lvl'+i).innerHTML = 'Level '+i;
@@ -1174,7 +1199,7 @@ for(button of buttons) {
 		let lev = b.innerHTML.replace(/ /,'').toLowerCase();
 		// int representation of level we are choosing
 		lev = (lev[lev.length-1]);
-		if(currentLayout == 'tarmak') {
+		if(currentLayout == 'tarmak' || currentLayout == 'tarmakdh') {
 			lev++;
 		}
 		if(b.innerHTML == 'All Words') {
