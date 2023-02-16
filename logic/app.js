@@ -1030,8 +1030,8 @@ input.addEventListener('keydown', (e)=> {
 	/*___________________________________________________*/
 
 
-	/*_________________________________________________________________________*/
-	/*____________________listener for space and enter keys____________________*/
+	/*________________________________________________________________________________________*/
+	/*____________________listener for space and enter keys and reset keys____________________*/
 	// listens for the enter  and space key. Checks to see if input contains the
 	// correct word. If yes, generate new word. If no, give user
 	// negative feedback
@@ -1068,8 +1068,16 @@ input.addEventListener('keydown', (e)=> {
 		}
 	}// end keyEvent if statement
 
-	/*____________________listener for space and enter keys____________________*/
-	/*_________________________________________________________________________*/
+	if(e.keyCode === 9 || e.keyCode === 27) {
+		// 9 = Tab, 27 = Esc
+		reset();
+	} else if (e.keyCode === 116) {
+		// F5 does not reload page because of the input area without this if-else
+		window.location.reload();
+	}// end of reset key check
+
+	/*____________________listener for space and enter keys and reset keys____________________*/
+	/*________________________________________________________________________________________*/
 
 
 
