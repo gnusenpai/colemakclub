@@ -1280,28 +1280,30 @@ function updateCheatsheetStyling(level) {
 		// check active levels and apply styling
 		for(let i = 0; i < level; i++) {
 
-			// the letter that will appear on the key
-			let letter = keyboardMap[n.id];
+			if (localStorage.getItem('keyRemapping') === 'true') {
+				// the letter that will appear on the key
+				let letter = keyboardMap[n.id];
 
-			let lettersToCheck = letterDictionary[objKeys[i]]+punctuation;
+				let lettersToCheck = letterDictionary[objKeys[i]]+punctuation;
 
-			if(lettersToCheck.includes(letter)){
-				n.innerHTML=`
-					<span class='letter'>`+ letter + `</span>
-				`	
-				n.classList.remove('inactive');
-				if(punctuation.includes(letter)){
-					n.classList.remove('active');
-					n.classList.add('punctuation');
-				}else if(i==0){
-					n.classList.add('homeRow');
-				}else if(i==6){
-					// all words selected
-				}else if(i == level-1){
-					n.classList.remove('active');
-					n.classList.add('currentLevelKeys');
-				}else {
-					n.classList.add('active');
+				if(lettersToCheck.includes(letter)){
+					n.innerHTML=`
+						<span class='letter'>`+ letter + `</span>
+					`	
+					n.classList.remove('inactive');
+					if(punctuation.includes(letter)){
+						n.classList.remove('active');
+						n.classList.add('punctuation');
+					}else if(i==0){
+						n.classList.add('homeRow');
+					}else if(i==6){
+						// all words selected
+					}else if(i == level-1){
+						n.classList.remove('active');
+						n.classList.add('currentLevelKeys');
+					}else {
+						n.classList.add('active');
+					}
 				}
 			}
 		}
@@ -1324,6 +1326,7 @@ mappingStatusButton.addEventListener('click', ()=> {
 
 	// change focus back to input
 	input.focus();
+	updateCheatsheetStyling(currentLevel);
 });
 
 // resetButton listener
