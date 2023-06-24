@@ -988,8 +988,9 @@ input.addEventListener('keydown', (e)=> {
 	// this is the actual character typed by the user
 	let char = e.code;
 
+	let keyRemappingEnabled = localStorage.getItem('keyRemapping'); 
 	// prevent default char from being typed and replace new char from keyboard map
-	if (localStorage.getItem('keyRemapping') === 'true') {
+	if (keyRemappingEnabled === 'true') {
 		if(char in keyboardMap && gameOn) {
 			if(!e.shiftKey) {
 				input.value += keyboardMap[char];
@@ -1099,8 +1100,12 @@ input.addEventListener('keydown', (e)=> {
 
 	// if key produces a character, (ie not shift, backspace, or another 
 	// utility key) increment letter index
-	if(char in keyboardMap && !specialKeyCodes.includes(e.keyCode)) {
-		letterIndex++;
+	if(!specialKeyCodes.includes(e.keyCode)) {
+		// only increase the letterIndex if either keyMapping is disabled
+		// or the char is included in the keyboardMap when enabled
+		if(keyRemappingEnabled === 'false' ||
+			(keyRemappingEnabled === 'true' && char in keyboardMap))
+			letterIndex++;
 	}
 
 	// check if answer is correct and apply the correct styling. 
