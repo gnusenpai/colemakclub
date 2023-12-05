@@ -97,7 +97,7 @@ levelDictionaries = {
     lvl3: "aqpb",
     lvl4: "üäöw",
     lvl5: "yuml",
-    lvl6: "zvfjhkx",
+    lvl6: "zvfjhkxgß",
     lvl7: alphabet,
   },
   custom: {
