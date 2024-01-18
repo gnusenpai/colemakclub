@@ -333,6 +333,20 @@ input {
 	font-size: 5vmin;
 }
 
+
+#buttonContainer {
+    position: fixed;  /* Fixed positioning */
+    top: 10px;       /* Adjust as needed */
+    left: 10px;      /* Adjust as needed */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#buttonContainer button {
+    margin-bottom: 5px; /* Spacing between buttons */
+}
+
 #scoreText, #timeText {
 	font-family: 'Verdana', sans-serif;
 }
@@ -823,8 +837,6 @@ input:checked + .slider:before {
 		opacity: 0;
 	}
 }
-
-
 
 
 

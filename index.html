@@ -24,7 +24,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 	<link rel="stylesheet" type="text/css" href="logic/main.css">
 </head>
 <body>
-
 	<div id='selectors'>
 		<div>
 			<select id='layout' autocomplete="off">
@@ -149,6 +148,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 		</label>	
 	</div>
 
+<div id="buttonContainer">
+    <button onclick="displayGameData()">Show Data</button>
+    <button onclick="downloadGameData()">Download Data</button>
+</div>
+<div id="csvDisplay"></div>
 
 <script type="text/javascript" src="logic/layoutInfo.js"></script>
 <script type="text/javascript" src="logic/wordList.js"></script>

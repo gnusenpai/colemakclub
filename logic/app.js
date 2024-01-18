@@ -1463,6 +1463,32 @@ function checkAnswer() {
 	return inputVal == correctAnswer;
 }
 
+function storeGameData() {
+    // Collect game data
+    var mode = currentLayout; // Assuming currentLayout represents the mode
+    var level = currentLevel;
+    var wpm = wpmText.textContent.split(': ')[1]; // Extract WPM from the textContent
+    var words = score; // Total words typed
+    var accuracy = accuracyText.textContent.split(': ')[1]; // Extract accuracy from textContent
+
+    // Create an object with the data
+    var gameData = {
+        mode: mode,
+        level: level,
+        wpm: wpm,
+        words: words,
+        accuracy: accuracy
+    };
+
+    // Get existing data from local storage
+    var existingData = JSON.parse(localStorage.getItem('typingGameData')) || [];
+
+    // Add the new game data to the existing data
+    existingData.push(gameData);
+
+    // Save back to local storage
+    localStorage.setItem('typingGameData', JSON.stringify(existingData));
+}
 
 
 function endGame() {
@@ -1503,7 +1529,52 @@ function endGame() {
 	// set letter index (where in the word the user currently is)
 	// to the beginning of the word
 	letterIndex = 0;
+	storeGameData();
 }
+
+
+function displayGameData() {
+    var displayContainer = document.getElementById('csvDisplay');
+
+    // Check if the display container is already showing data
+    if (displayContainer.innerHTML !== '') {
+        // Clear the container to hide data
+        displayContainer.innerHTML = '';
+    } else {
+        // Retrieve stored data
+        var storedData = JSON.parse(localStorage.getItem('typingGameData')) || [];
+
+        // Convert array of objects to a CSV-like string
+        var displayContent = '<pre>Mode,Level,WPM,Words,Accuracy\n';
+        storedData.forEach(function(row) {
+            displayContent += row.mode + ',' + row.level + ',' + row.wpm + ',' + row.words + ',' + row.accuracy + '\n';
+        });
+        displayContent += '</pre>';
+
+        // Display in the designated container
+        displayContainer.innerHTML = displayContent;
+    }
+}
+
+
+function downloadGameData() {
+    var storedData = JSON.parse(localStorage.getItem('typingGameData')) || [];
+    var csvContent = 'Mode,Level,WPM,Words,Accuracy\n';
+    storedData.forEach(function(row) {
+        csvContent += row.mode + ',' + row.level + ',' + row.wpm + ',' + row.words + ',' + row.accuracy + '\n';
+    });
+
+    var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    var link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'typing-game-data.csv';
+    link.style.visibility = 'hidden';
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
 
 // generates a single line to be appended to the answer array
 // if a line with a maximum number of words is desired, pass it in as a parameter
