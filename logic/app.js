@@ -204,7 +204,9 @@ setInterval(()=> {
 
 // starts the timer when there is any change to the input field
 input.addEventListener('keydown', (e)=> {
-	gameOn = true;
+	if (!e.altKey && !e.ctrlKey) {
+		gameOn = true;
+	}
 });
 
 
@@ -963,6 +965,7 @@ function clearSelectedInput() {
 
 // input key listener
 input.addEventListener('keydown', (e)=> {
+	if (e.altKey || e.ctrlKey) return;
 
 	// removes first line on the first letter of the first word of a new line
 	if(deleteLatestWord) {
