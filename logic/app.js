@@ -1478,9 +1478,9 @@ function endGame() {
 	// calculate wpm
 	let wpm;
 	if(!timeLimitMode) {
-		wpm = (((correct+errors)/5)/(minutes+(seconds/60))).toFixed(2);
+		wpm = (((correct)/5)/(minutes+(seconds/60))).toFixed(2);
 	} else {
-		wpm = (((correct+errors)/5)/(timeLimitModeInput.value/60)).toFixed(2);
+		wpm = (((correct)/5)/(timeLimitModeInput.value/60)).toFixed(2);
 	}
 	// set accuracyText
 	accuracyText.innerHTML="Accuracy: " + ((100*correct)/(correct+errors)).toFixed(2) + '%';
