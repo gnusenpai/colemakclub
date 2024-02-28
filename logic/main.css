@@ -491,6 +491,10 @@ input:checked + .slider:before {
 	text-transform: uppercase;
 }
 
+.hiddenNonCurrentLevelKeys .letter {
+  opacity: 0;
+}
+
 .oneu {
 	width: 5.4%;
 }

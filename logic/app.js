@@ -74,6 +74,7 @@ var requireBackspaceCorrection = !localStorage.getItem('requireBackspaceCorrecti
 var timeLimitMode 		= localStorage.getItem('timeLimitMode') === 'true';
 var wordScrollingMode 	= !localStorage.getItem('wordScrollingMode') || localStorage.getItem('wordScrollingMode') === 'true';  // true by default.
 var showCheatsheet		= !localStorage.getItem('showCheatsheet') || localStorage.getItem('showCheatsheet') === 'true';  // true by default.
+var showPreviousLevelLetters = !localStorage.getItem('showPreviousLevelLetters') || localStorage.getItem('showPreviousLevelLetters') === 'true';  // true by default.
 var playSoundOnClick    = localStorage.getItem('playSoundOnClick') === 'true';
 var playSoundOnError    = localStorage.getItem('playSoundOnError') === 'true';
 var deleteFirstLine		= false; // make this true every time we finish typing a line
@@ -106,6 +107,7 @@ timeLimitModeInput			= document.querySelector('.timeLimitModeInput')
 wordScrollingModeButton		= document.querySelector('.wordScrollingModeButton'),
 punctuationModeButton       = document.querySelector('.punctuationModeButton'),
 showCheatsheetButton		= document.querySelector('.showCheatsheetButton');
+showPreviousLevelLettersButton		= document.querySelector('.showPreviousLevelLetters');
 playSoundOnClickButton      = document.querySelector('.playSoundOnClick');
 playSoundOnErrorButton      = document.querySelector('.playSoundOnError');
 
@@ -149,6 +151,7 @@ function start() {
 	wordLimitModeButton.checked = !timeLimitMode;
 	wordLimitModeInput.value = scoreMax;
 	showCheatsheetButton.checked = showCheatsheet;
+	showPreviousLevelLettersButton.checked = showPreviousLevelLetters;
 	playSoundOnClickButton.checked = playSoundOnClick;
 	playSoundOnErrorButton.checked = playSoundOnError;
 
@@ -420,6 +423,17 @@ showCheatsheetButton.addEventListener('click', ()=> {
 	showCheatsheet = !showCheatsheet
 	localStorage.setItem('showCheatsheet', showCheatsheet);
 });
+
+showPreviousLevelLettersButton.addEventListener('click', ()=> {
+	showPreviousLevelLetters = !showPreviousLevelLetters
+
+	localStorage.setItem('showPreviousLevelLetters', showPreviousLevelLetters);
+
+	createTestSets();
+	updateCheatsheetStyling(currentLevel);
+	reset();
+});
+
 
 // play sound on click toggle
 playSoundOnClickButton.addEventListener('click', ()=> {
@@ -1265,6 +1279,7 @@ function updateCheatsheetStyling(level) {
 	for(n of allKeys) {
 		//reset all keys to default
 		n.classList.add('inactive');
+		n.classList.remove('hiddenNonCurrentLevelKeys');
 		n.classList.remove('active');
 		n.classList.remove('homeRow');
 		n.classList.remove('currentLevelKeys');
@@ -1293,8 +1308,14 @@ function updateCheatsheetStyling(level) {
 				if(punctuation.includes(letter)){
 					n.classList.remove('active');
 					n.classList.add('punctuation');
+					if (!showPreviousLevelLetters) {
+						n.classList.add('hiddenNonCurrentLevelKeys');
+					}
 				}else if(i==0){
 					n.classList.add('homeRow');
+					if (!showPreviousLevelLetters && i != level-1) {
+						n.classList.add('hiddenNonCurrentLevelKeys');
+					}
 				}else if(i==6){
 					// all words selected
 				}else if(i == level-1){
@@ -1302,6 +1323,9 @@ function updateCheatsheetStyling(level) {
 					n.classList.add('currentLevelKeys');
 				}else {
 					n.classList.add('active');
+					if (!showPreviousLevelLetters) {
+						n.classList.add('hiddenNonCurrentLevelKeys');
+					}
 				}
 			}
 		}
