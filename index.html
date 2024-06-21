@@ -76,6 +76,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 			<li>Show Cheatsheet<input class='showCheatsheetButton' type="checkbox" autocomplete="off" checked></li>
 			<li>Play Sound On Click<input class='playSoundOnClick' type="checkbox" autocomplete="off"></li>
 			<li>Play Sound On Error<input class='playSoundOnError' type="checkbox" autocomplete="off"></li>
+			<li>  
+				<input class='mistakeLimitModeInput' type="number" value="5" step="1"autocomplete="off">
+				Mistake Limit Mode <input class='mistakeLimitModeButton' type="checkbox" autocomplete="off"> 
+			</li>
 		</ul>
 	</div>
 
@@ -122,6 +126,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 			<input id = 'userInput' type="paragraph" spellcheck="false">
 			<div id='scoreAndClock'>
 				<span id="scoreText">0/50</span>
+				<span id="mistakeLimitText" class="noDisplay">0/5</span>
 				<span id="timeText">0m :0 s</span>
 			</div>
 			<div id='testResults' class='transparent'>

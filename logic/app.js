@@ -9,6 +9,8 @@ answer 			= document.querySelector('#answer'),
 //
 scoreText 		= document.querySelector('#scoreText'),
 //
+mistakeLimitText = document.querySelector('#mistakeLimitText'),
+//
 timeText 		= document.querySelector('#timeText'),
 //
 resetButton 	= document.querySelector('#resetButton'),
@@ -76,6 +78,8 @@ var wordScrollingMode 	= !localStorage.getItem('wordScrollingMode') || localStor
 var showCheatsheet		= !localStorage.getItem('showCheatsheet') || localStorage.getItem('showCheatsheet') === 'true';  // true by default.
 var playSoundOnClick    = localStorage.getItem('playSoundOnClick') === 'true';
 var playSoundOnError    = localStorage.getItem('playSoundOnError') === 'true';
+var mistakeLimitMode 		= localStorage.getItem('mistakeLimitMode') === 'true';
+var mistakeLimit 		= localStorage.getItem('mistakeLimit');
 var deleteFirstLine		= false; // make this true every time we finish typing a line
 var deleteLatestWord    = false; // if true, delete last word typed. Set to true whenever a word is finished
 var sentenceStartIndex = -1; // keeps track of where we are in full sentence mode
@@ -102,12 +106,15 @@ requireBackspaceCorrectionToggle = document.querySelector('.requireBackspaceCorr
 wordLimitModeButton			= document.querySelector('.wordLimitModeButton'),
 wordLimitModeInput			= document.querySelector('.wordLimitModeInput'),
 timeLimitModeButton			= document.querySelector('.timeLimitModeButton'),
-timeLimitModeInput			= document.querySelector('.timeLimitModeInput')
+timeLimitModeInput			= document.querySelector('.timeLimitModeInput'),
 wordScrollingModeButton		= document.querySelector('.wordScrollingModeButton'),
 punctuationModeButton       = document.querySelector('.punctuationModeButton'),
-showCheatsheetButton		= document.querySelector('.showCheatsheetButton');
-playSoundOnClickButton      = document.querySelector('.playSoundOnClick');
-playSoundOnErrorButton      = document.querySelector('.playSoundOnError');
+showCheatsheetButton		= document.querySelector('.showCheatsheetButton'),
+playSoundOnClickButton      = document.querySelector('.playSoundOnClick'),
+playSoundOnErrorButton      = document.querySelector('.playSoundOnError'),
+mistakeLimitModeButton			= document.querySelector('.mistakeLimitModeButton'),
+mistakeLimitModeInput			= document.querySelector('.mistakeLimitModeInput');
+
 
 start();
 init();
@@ -130,6 +137,10 @@ function start() {
 
 	if (timeLimitMode) {
 		toggleTimeLimitModeUI();
+	}
+	
+	if (mistakeLimitMode) {
+		togglemistakeLimitModeUI();
 	}
 
 	// if true, user keyboard input will be mapped to the chosen layout. No mapping otherwise
@@ -293,6 +304,41 @@ function toggleTimeLimitModeUI() {
 	timeLimitModeInput.classList.toggle('noDisplay');
 	wordLimitModeInput.classList.toggle('noDisplay');
 }
+
+// Toggle display of mistake count
+function togglemistakeLimitModeUI() {
+	console.log('mistake limit mode toggled');
+	mistakeLimitModeButton.checked = mistakeLimitMode;
+	mistakeLimitModeInput.value = mistakeLimit;
+	mistakeLimitText.classList.toggle('noDisplay');
+}
+
+mistakeLimitModeButton.addEventListener('click', () => {
+	if (mistakeLimitMode) {
+		mistakeLimitMode = !mistakeLimitMode;
+	} else {
+		mistakeLimitMode = true;
+	}
+	togglemistakeLimitModeUI();
+	localStorage.setItem('mistakeLimitMode', mistakeLimitMode);
+	reset();
+});
+
+mistakeLimitModeInput.addEventListener('change', ()=> {
+	let limit = Math.floor(mistakeLimitModeInput.value);
+	console.log('limit: ' + limit);
+	
+	if(limit < 1  || limit > 10000) {
+		limit = 0
+	}
+
+	// set the dom element to a whole number (in case the user puts in a decimal)
+	mistakeLimitModeInput.value = limit;
+	errors = limit;
+
+	localStorage.setItem('mistakeLimit', errors);
+	reset();
+});
 
 // time limit mode button; if this is checked, uncheck button for word limit and vice versa
 timeLimitModeButton.addEventListener('click', ()=> {
@@ -1158,6 +1204,14 @@ input.addEventListener('keydown', (e)=> {
 			if(prompt.children[0].children[wordIndex].children[letterIndex-1]) {
 				prompt.children[0].children[wordIndex].children[letterIndex-1].style.color = 'red';
 			}
+			
+			if (mistakeLimitMode) {
+				updateMistakeLimitText();
+				if (errors >= mistakeLimitModeInput.value) {
+					console.log('lost');
+					endGame();
+				}
+			}
 		}
 
 		if(!requireBackspaceCorrection && !checkAnswerToIndex()){
@@ -1170,6 +1224,7 @@ input.addEventListener('keydown', (e)=> {
 				letterIndex = 0;
 			}
 		}	
+		
 	}
 
 	// if on the last word, check every letter so we don't need a space to end the game
@@ -1386,6 +1441,10 @@ function reset(){
 		seconds = timeLimitModeInput.value%60;
 		minutes = Math.floor(timeLimitModeInput.value/60);
 	}
+	
+	if (mistakeLimitMode) {
+		errors = 0;
+	}
 
 	// reset timeText
 	resetTimeText();
@@ -1414,6 +1473,7 @@ function reset(){
 
 	// change the 0/50 text
 	updateScoreText();
+	updateMistakeLimitText();
 
 	// change focus to the input field
 	input.focus();
@@ -1718,6 +1778,10 @@ function handleCorrectWord() {
 // the document
 function updateScoreText() {
 	scoreText.innerHTML = ++score + "/" + scoreMax;
+}
+
+function updateMistakeLimitText() {
+	mistakeLimitText.innerHTML = errors + "/" + mistakeLimitModeInput.value;
 }
 
 function resetTimeText() {
