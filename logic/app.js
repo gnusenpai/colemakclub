@@ -73,6 +73,7 @@ var fullSentenceModeEnabled = localStorage.getItem('fullSentenceModeEnabled') ==
 var requireBackspaceCorrection = !localStorage.getItem('requireBackspaceCorrection') || localStorage.getItem('requireBackspaceCorrection') === 'true';
 var timeLimitMode 		= localStorage.getItem('timeLimitMode') === 'true';
 var wordScrollingMode 	= !localStorage.getItem('wordScrollingMode') || localStorage.getItem('wordScrollingMode') === 'true';  // true by default.
+var hideScoreClock		= !localStorage.getItem('hideScoreClock') || localStorage.getItem('hideScoreClock') === 'false';
 var showCheatsheet		= !localStorage.getItem('showCheatsheet') || localStorage.getItem('showCheatsheet') === 'true';  // true by default.
 var playSoundOnClick    = localStorage.getItem('playSoundOnClick') === 'true';
 var playSoundOnError    = localStorage.getItem('playSoundOnError') === 'true';
@@ -105,6 +106,7 @@ timeLimitModeButton			= document.querySelector('.timeLimitModeButton'),
 timeLimitModeInput			= document.querySelector('.timeLimitModeInput')
 wordScrollingModeButton		= document.querySelector('.wordScrollingModeButton'),
 punctuationModeButton       = document.querySelector('.punctuationModeButton'),
+hideScoreClockButton		= document.querySelector('.hideScoreClockButton'),
 showCheatsheetButton		= document.querySelector('.showCheatsheetButton');
 playSoundOnClickButton      = document.querySelector('.playSoundOnClick');
 playSoundOnErrorButton      = document.querySelector('.playSoundOnError');
@@ -148,6 +150,7 @@ function start() {
 	timeLimitModeButton.checked = timeLimitMode;
 	wordLimitModeButton.checked = !timeLimitMode;
 	wordLimitModeInput.value = scoreMax;
+	hideScoreClockButton.checked = hideScoreClock;
 	showCheatsheetButton.checked = showCheatsheet;
 	playSoundOnClickButton.checked = playSoundOnClick;
 	playSoundOnErrorButton.checked = playSoundOnError;
@@ -202,9 +205,12 @@ setInterval(()=> {
 	}
 }, 1000);
 
-// starts the timer when there is any change to the input field
+// starts the timer when there is any change to the input field, and hide score and clock if toggled
 input.addEventListener('keydown', (e)=> {
 	gameOn = true;
+	if (hideScoreClock) {
+		document.getElementById("scoreAndClock").style.display = 'none';
+	}
 });
 
 
@@ -323,6 +329,8 @@ timeLimitModeInput.addEventListener('change', ()=> {
 	seconds = wholeSecond%60;
 	minutes = Math.floor(wholeSecond/60);
 
+	// show score and clock
+	document.getElementById("scoreAndClock").style.display = '';
 
 	gameOn = false;
 	resetTimeText();
@@ -405,6 +413,12 @@ punctuationModeButton.addEventListener('click', ()=> {
 	reset();
 	
 
+});
+
+// show score and clock toggle
+hideScoreClockButton.addEventListener('click', ()=> {
+	hideScoreClock = !hideScoreClock
+	localStorage.setItem('hideScoreClock', hideScoreClock);
 });
 
 // show cheatsheet toggle
@@ -1223,6 +1237,10 @@ for(button of buttons) {
 function switchLevel(lev) {
 	localStorage.setItem('currentLevel', lev);
 	console.log(lev);
+
+		// show score and clock
+		document.getElementById("scoreAndClock").style.display = '';
+
 		// stop timer
 		gameOn = false;
 
@@ -1353,6 +1371,8 @@ function reset(){
 
 	sentenceStartIndex = -1;
 
+	// show score and clock
+	document.getElementById("scoreAndClock").style.display = '';
 
 	// stop the timer
 	gameOn = false;
@@ -1471,6 +1491,9 @@ function endGame() {
 
 	// make resetButton visible
 	resetButton.classList.remove('noDisplay');
+
+	// show score and clock
+	document.getElementById("scoreAndClock").style.display = '';
 
 	// pause timer
 	gameOn = false;
