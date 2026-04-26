@@ -76,6 +76,7 @@ var wordScrollingMode 	= !localStorage.getItem('wordScrollingMode') || localStor
 var showCheatsheet		= !localStorage.getItem('showCheatsheet') || localStorage.getItem('showCheatsheet') === 'true';  // true by default.
 var playSoundOnClick    = localStorage.getItem('playSoundOnClick') === 'true';
 var playSoundOnError    = localStorage.getItem('playSoundOnError') === 'true';
+var speakNextWord		= localStorage.getItem('speakNextWord') === 'true';
 var deleteFirstLine		= false; // make this true every time we finish typing a line
 var deleteLatestWord    = false; // if true, delete last word typed. Set to true whenever a word is finished
 var sentenceStartIndex = -1; // keeps track of where we are in full sentence mode
@@ -108,6 +109,7 @@ punctuationModeButton       = document.querySelector('.punctuationModeButton'),
 showCheatsheetButton		= document.querySelector('.showCheatsheetButton');
 playSoundOnClickButton      = document.querySelector('.playSoundOnClick');
 playSoundOnErrorButton      = document.querySelector('.playSoundOnError');
+speakNextWordButton			= document.querySelector('.speakNextWordButton');
 
 start();
 init();
@@ -151,6 +153,7 @@ function start() {
 	showCheatsheetButton.checked = showCheatsheet;
 	playSoundOnClickButton.checked = playSoundOnClick;
 	playSoundOnErrorButton.checked = playSoundOnError;
+	speakNextWordButton.checked = speakNextWord;
 
 	if (localStorage.getItem('preferenceMenu')) {
 		openMenu();
@@ -163,6 +166,9 @@ function start() {
 	switchLevel(currentLevel);
 
 	updateLayoutUI();
+
+	// preload voices for TTS
+	window.speechSynthesis.getVoices();
 }
 
 
@@ -204,6 +210,7 @@ setInterval(()=> {
 
 // starts the timer when there is any change to the input field
 input.addEventListener('keydown', (e)=> {
+	if (!gameOn) speakWord(correctAnswer);
 	gameOn = true;
 });
 
@@ -433,6 +440,13 @@ playSoundOnErrorButton.addEventListener('click', ()=> {
 	localStorage.setItem('playSoundOnError', playSoundOnError);
 });
 
+// speak next word toggle
+speakNextWordButton.addEventListener('click', ()=> {
+	speakNextWord = !speakNextWord;
+	localStorage.setItem('speakNextWord', speakNextWord);
+	if (speakNextWord && correctAnswer) speakWord(correctAnswer);
+});
+
 /*______________________preference menu______________________*/
 /*___________________________________________________________*/
 
@@ -504,6 +518,33 @@ function playErrorSound() {
   if (!playSoundOnError) return;
   errorSound.currentTime = 0;
   errorSound.play();
+}
+
+function pickVoice() {
+  var voices = window.speechSynthesis.getVoices();
+  var preferred = [
+    'Google US English',
+    'Samantha',
+    'Microsoft Aria Online (Natural) - English (United States)',
+    'Microsoft Zira - English (United States)',
+    'Alex'
+  ];
+  for (var i = 0; i < preferred.length; i++) {
+    var v = voices.find(function(v){ return v.name === preferred[i]; });
+    if (v) return v;
+  }
+  return null;
+}
+
+function speakWord(word) {
+  if (!speakNextWord) return;
+  window.speechSynthesis.cancel();
+  var utterance = new SpeechSynthesisUtterance(word);
+  utterance.lang = 'en-US';
+  utterance.rate = 0.8;
+  var voice = pickVoice();
+  if (voice) utterance.voice = voice;
+  window.speechSynthesis.speak(utterance);
 }
 
 /*___________________________sound___________________________*/
@@ -1330,6 +1371,7 @@ mappingStatusButton.addEventListener('click', ()=> {
 resetButton.addEventListener('click', ()=> {
 	console.log('reset button called');
 	reset();
+	speakWord(correctAnswer);
 });
 
 
@@ -1711,6 +1753,7 @@ function handleCorrectWord() {
 	// save the correct answer to a variable before removing it 
 	// from the answer string
 	correctAnswer = answerWordArray[0];
+	speakWord(correctAnswer);
 
 }
 
